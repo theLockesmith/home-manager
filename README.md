@@ -45,8 +45,7 @@ nix-channel --update
 nix-shell '<home-manager>' -A install
 ```
 
-## Source Home Manager
-Source the Home Manager script:
+### Source Home Manager script
 ```zsh
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 ```
@@ -56,14 +55,14 @@ You can also add id to your .profile to source the script each time the terminal
 echo ". \"$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh\"" >> $HOME/.profile
 ```
 
-## Clone the repository
+### Clone the repository
 Clone the repository to the home manager directory:
 ```zsh
 mkdir -p $HOME/.config/home-manager/
 git clone https://github.com/theLockesmith/home-manager.git $HOME/.config/
 ```
 
-## Use Home Manager to load your home
+### Use Home Manager to load your home
 If everything goes as planned, you can build build your home directory out by running:
 ```zsh
 home-manager switch
