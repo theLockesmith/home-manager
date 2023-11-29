@@ -59,6 +59,19 @@ If everything goes as planned, you can build build your home directory out by ru
 home-manager switch
 ```
 
+## Put it all together
+Assuming you're working on the master branch, copy and paste this directly into the terminal to get up and running:
+```zsh
+curl -L https://nixos.org/nix/install | sh -s -- --daemon
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --update
+nix-shell '<home-manager>' -A install
+echo ". \"$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh\"" >> $HOME/.profile
+mkdir -p $HOME/.config/home-manager/
+git clone https://github.com/theLockesmith/home-manager.git $HOME/.config/
+home-manager switch
+```
+
 
 [2]: https://nix.dev/install-nix
 [3]: https://nixos.org/manual/nix/stable/installation/multi-user.html
