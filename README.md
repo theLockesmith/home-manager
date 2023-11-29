@@ -5,7 +5,7 @@ Programs, services, dotfiles, and configs backed up and managed with [home-manag
 
 ## Glossary
 [Prerequisites](#prerequisites)
-[Installation](#install)
+[Installation](#installation)
 
 ## Prerequisites
 This is built with [Nix][2].  
