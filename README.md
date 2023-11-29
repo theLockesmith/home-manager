@@ -1,7 +1,6 @@
 # Home Manager
 Programs, services, dotfiles, and configs backed up and managed with [home-manager][1]
 
-[1]: https://github.com/nix-community/home-manager
 
 ## Glossary
 [Prerequisites](#prerequisites)  
@@ -82,7 +81,7 @@ git clone https://github.com/theLockesmith/home-manager.git $HOME/.config/
 home-manager switch
 ```
 
-
+[1]: https://github.com/nix-community/home-manager
 [2]: https://nix.dev/install-nix
 [3]: https://nixos.org/manual/nix/stable/installation/multi-user.html
 [4]: https://nixos.org/manual/nix/stable/installation/single-user.html

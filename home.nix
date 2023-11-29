@@ -32,7 +32,7 @@
     ".vimrc".source = ./.vimrc;
     ".bashrc".source = ./.bashrc;
     ".zshrc".source = ./.zshrc;
-    ".byobu".source = ./.byobu;
+    # ".byobu".source = ./.byobu;
     ".vim".source = ./.vim;
     ".scripts".source = ./.scripts;
   };
@@ -59,7 +59,7 @@
 
     pkgs.gotop
     pkgs.tmux
-    pkgs.byobu
+    #pkgs.byobu
   ];
 
   # Home Manager can also manage your environment variables through
