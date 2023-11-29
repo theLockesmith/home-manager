@@ -1,0 +1,119 @@
+#!./venv/bin/python3
+
+import getopt, json, sys
+from pprint import pprint
+from web3 import Web3
+
+provider = Web3(Web3.HTTPProvider("http://10.0.5.10:8547"))
+
+def main(argv):
+    try:
+        opts, args = getopt.getopt(argv,"hd:f:c:t:r:a:",["eth","ethereum","arb","arbitrum","poly","matic","polygon","goerli"])
+    except:
+        usage()
+        sys.exit()
+    abi = None
+    tx = None
+    contract_address = None
+    receipt = None
+    getTx = None
+
+    if len(opts) > 0:
+        for opt, arg in opts:
+            try:
+                if opt == '-h':
+                    usage()
+                elif opt == "--eth" or opt == "--ethereum":
+                    provider = Web3(Web3.HTTPProvider("http://10.0.5.10:8545"))
+                elif opt == "--arb" or opt == "--arbitrum":
+                    provider = Web3(Web3.HTTPProvider("http://10.0.5.10:8547"))
+                elif opt == "--poly" or opt == "--maric" or opt == "--polygon":
+                    provider = Web3(Web3.HTTPProvider("http://10.0.5.10:9545"))
+                elif opt == "--goerli":
+                    provider = Web3(Web3.HTTPProvider("https://goerli.infura.io/v3/bd66e85b6ee047a3a6a6eb333ba744d7"))
+                elif opt == '-d':
+                    tx = arg
+                elif opt == '-a':
+                    try:
+                        with open(arg, "r") as f:
+                            abi = json.load(f)
+                    except:
+                        print("The file chosen is invalid.")
+                        usage()
+                elif opt == "-c":
+                    contract_address = arg
+                elif opt == "-r":
+                    # receipt = provider.eth.getTransactionReceipt(arg)
+                    receipt = arg
+                elif opt == "-t":
+                    # getTx = provider.eth.getTransaction(arg)
+                    getTx = arg
+                else:
+                    usage()
+            except Exception as e:
+                print(str(e))
+                usage()
+    else:
+        usage()
+    if receipt:
+        receipt = provider.eth.getTransactionReceipt(receipt)
+        """
+        pprint(f"Block hash: {receipt['blockHash']}")
+        pprint(f"Block number: {receipt['blockNumber']}")
+        pprint(f"Contract address: {receipt['contractAddress']}")
+        pprint(f"Cumulative gas used: {receipt['cumulativeGasUsed']}")
+        pprint(f"Effictive gas price: {receipt['effectiveGasPrice']}")
+        pprint(f"From: {receipt['from']}")
+        pprint(f"Gas used: {receipt['gasUsed']}")
+        pprint(f"Gas used for L1: {receipt['gasUsedForL1']}")
+        pprint(f"L1 block number: {receipt['l1BlockNumber']}")
+        pprint("Logs:")
+        for log in receipt['logs']:
+            pprint(dict(log))
+        pprint(f"Logs bloom: {receipt['logsBloom']}")
+        pprint(f"Status: {receipt['status']}")
+        pprint(f"To: {receipt['to']}")
+        pprint(f"Transaction hash: {receipt['transactionHash']}")
+        pprint(f"Transaction index: {receipt['transactionIndex']}")
+        pprint(f"Type: {receipt['type']}")
+        """
+        pprint(dict(receipt))
+    elif getTx:
+        getTx = provider.eth.getTransaction(getTx)
+        pprint(dict(getTx))
+    else:
+        decode(provider, contract_address, abi, tx)
+
+def decode(provider, address, abi, tx):
+    try:
+        contract = provider.eth.contract(address=Web3.toChecksumAddress(address),abi=abi)
+        func_obj, func_params = contract.decode_function_input(tx)
+        pprint(func_obj)
+        pprint(func_params)
+        if type(func_params) == list:
+            for param in func_params["data"]:
+                pprint(contract.decode_function_input(param))
+        else:
+            pprint(func_params)
+    except Exception as e:
+        pprint(str(e))
+
+def usage():
+    print(f"""Usage: txdecode [-dfct]
+       txdecode -h | --help
+
+       -d, --decode        transaction hash to be decoded
+       -a, --abi           location of the abi needed to decode the hash
+       -c, --contract      contract address
+       -r, --receipt       transaction receipt
+       -t, --thash         transaction hash
+
+       --eth, --ethereum   use ethereum network
+       --arb, --arbitrum   use arbitrum network
+       --poly, --matic, |
+            --polygon      use polygon network
+    """)
+    sys.exit()
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

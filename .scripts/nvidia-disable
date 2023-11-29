@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# PCI ID of the GPU to be disabled
+GPU_PCI_ID="0000:65:00.0"
+
+# Unbind the GPU from the current driver
+sudo echo "0000:65:00.0" > /sys/bus/pci/devices/$GPU_PCI_ID/remove
+
+# Attach the GPU to pci_stub
+sudo echo "0000:65:00.0" > /sys/bus/pci/drivers/vfio-pci/new_id
+
+sudo modprobe -r nvidia_drm
+sudo modprobe -r nvidia_modeset
+sudo modprobe -r nvidia
+
+echo "NVIDIA drivers removed"
+
+sudo modprobe -i vfio_pci vfio_pci_core vfio_iommu_type1
+
+echo "VFIO drivers added"
+
+sudo virsh nodedev-detach pci_0000_65_00_0
+sudo virsh nodedev-detach pci_0000_65_00_1
+
+echo "GPU detached (now vfio ready)"
+echo "COMPLETED!"
+
+#sudo systemctl start graphical.target

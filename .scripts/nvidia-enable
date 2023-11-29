@@ -1,0 +1,21 @@
+#!/bin/bash
+
+sudo rmmod vfio_pci vfio_pci_core vfio_iommu_type1
+
+echo "VFIO drivers removed"
+
+sudo modprobe -i nvidia_modeset nvidia_drm nvidia
+
+#sudo virsh nodedev-reattach pci_0000_65_00_0
+#sudo virsh nodedev-reattach pci_0000_65_00_1
+
+# PCI ID of the GPU to be enabled
+GPU_PCI_ID="0000:65:00.0"
+
+# Rebind the GPU to the NVIDIA driver (or your original driver)
+sudo echo "0000:65:00.0" > /sys/bus/pci/drivers/nvidia/bind
+
+echo "GPU reattached (now host ready)"
+
+echo "NVIDIA drivers added"
+echo "COMPLETED!"

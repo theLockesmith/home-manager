@@ -1,0 +1,14 @@
+## Run down the list of vim alternatives until you get one
+
+if which nvim >/dev/null 2>&1; then
+    VIM=$(which nvim)
+    $VIM $1
+elif which vim >/dev/null 2>&1; then
+    VIM=$(which vim)
+    $VIM $1
+elif which vi >/dev/null 2>&1; then
+    VIM=$(which vi)
+    $VIM $1
+else
+    echo "No instances of vim found."
+fi
