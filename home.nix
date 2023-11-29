@@ -57,9 +57,21 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
 
+    pkgs.htop
     pkgs.gotop
     pkgs.tmux
+    pkgs.screen
     #pkgs.byobu
+    pkgs.nvim
+    pkgs.neofetch
+    pkgs.python3
+    pkgs.python311Packages.virtualenvwrapper
+    pkgs.ruby
+    pkgs.cmatrix
+    pkgs.nettools
+    pkgs.fnm
+
+
   ];
 
   # Home Manager can also manage your environment variables through
