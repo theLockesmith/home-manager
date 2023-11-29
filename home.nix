@@ -32,7 +32,7 @@
     ".vimrc".source = ./.vimrc;
     ".bashrc".source = ./.bashrc;
     ".zshrc".source = ./.zshrc;
-    ".byobu".source = ./.byobu;
+    #".byobu".source = ./.byobu;
     ".vim".source = ./.vim;
     ".scripts".source = ./.scripts;
   };
