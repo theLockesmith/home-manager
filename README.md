@@ -6,14 +6,14 @@ Programs, services, dotfiles, and configs backed up and managed with [home-manag
 ## Prerequisites
 This is built with [Nix][2].  
 If using an operating system other than NixOS, install Nix.  
-### Multi-user Installation
-[documentation][3]:
+### Multi-user Installation:
+[multi-user install docs][3]
 ```zsh
 curl -L https://nixos.org/nix/install | sh -s -- --daemon
 ```
 
-### Single-user Installation
-[documentation][4]:
+### Single-user Installation:
+[single-user install docs][4]
 ```zsh
 curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
 ```
