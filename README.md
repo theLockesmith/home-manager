@@ -3,6 +3,10 @@ Programs, services, dotfiles, and configs backed up and managed with [home-manag
 
 [1]: https://github.com/nix-community/home-manager
 
+## Glossary
+[Prerequisites](#prerequisites)
+[Installation](#install)
+
 ## Prerequisites
 This is built with [Nix][2].  
 If using an operating system other than NixOS, install Nix.  
