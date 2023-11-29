@@ -62,7 +62,7 @@
     pkgs.tmux
     pkgs.screen
     #pkgs.byobu
-    pkgs.nvim
+    pkgs.neovim
     pkgs.neofetch
     pkgs.python3
     pkgs.python311Packages.virtualenvwrapper
@@ -70,7 +70,6 @@
     pkgs.cmatrix
     pkgs.nettools
     pkgs.fnm
-
 
   ];
 
