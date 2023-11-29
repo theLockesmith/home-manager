@@ -6,12 +6,14 @@ Programs, services, dotfiles, and configs backed up and managed with [home-manag
 ## Prerequisites
 This is built with [Nix][2].  
 If using an operating system other than NixOS, install Nix.  
-Using the [multi-user installation][3]:
+### Multi-user Installation
+[documentation][3]:
 ```zsh
 curl -L https://nixos.org/nix/install | sh -s -- --daemon
 ```
 
-Or use the [single-user installation][4]:
+### Single-user Installation
+[documentation][4]:
 ```zsh
 curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
 ```
@@ -29,7 +31,7 @@ nix-channel --update
 nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz home-manager
 nix-channel --update
 ```
-***Remember to change the release version to match your release***
+***- Remember to change the release version to match your release***
 
 
 
