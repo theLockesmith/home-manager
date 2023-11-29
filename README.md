@@ -46,9 +46,14 @@ nix-shell '<home-manager>' -A install
 ```
 
 ## Source Home Manager
-Typically done by adding the following line to your .profile:
+Source the Home Manager script:
 ```zsh
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+```
+
+You can also add id to your .profile to source the script each time the terminal loads:
+```zsh
+echo ". \"$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh\"" >> $HOME/.profile
 ```
 
 ## Clone the repository
