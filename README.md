@@ -35,7 +35,7 @@ nix-channel --update
 ```
 ***Change the release version to match your release***
 
-## Run Home Manager installation
+#### Install Home Manager to nix
 ```zsh
 nix-shell '<home-manager>' -A install
 ```
