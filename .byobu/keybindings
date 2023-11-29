@@ -1,0 +1,6 @@
+source $BYOBU_PREFIX/share/byobu/keybindings/common
+bindkey "^A"
+bindkey "^A"
+bindkey "^B"
+escape "^Bb"
+register x "^B"
