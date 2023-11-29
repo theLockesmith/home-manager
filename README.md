@@ -4,8 +4,9 @@ Programs, services, dotfiles, and configs backed up and managed with [home-manag
 [1]: https://github.com/nix-community/home-manager
 
 ## Glossary
-[Prerequisites](#prerequisites)
-[Installation](#installation)
+[Prerequisites](#prerequisites)  
+[Installation](#installation)  
+
 
 ## Prerequisites
 This is built with [Nix][2].  
