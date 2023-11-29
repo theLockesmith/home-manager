@@ -20,19 +20,31 @@ curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
 ## Installation
 Visit the [community docs][5] for more info.
 
-### Master or unstable channel:
+### Add the appropriate channel
+
+#### Master or unstable channel:
 ```zsh
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 ```
 
-### For a specific channel:
+#### For a specific channel:
 ```zsh
 nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz home-manager
 nix-channel --update
 ```
-***- Remember to change the release version to match your release***
+***Change the release version to match your release***
 
+### Run Home Manager installation
+```zsh
+nix-shell '<home-manager>' -A install
+```
+
+### Source Home Manager
+Typically done by adding the following line to your .profile:
+```zsh
+. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+```
 
 
 [2]: https://nix.dev/install-nix
