@@ -164,7 +164,6 @@ set_prompt () {
   local DARK_GRAY="\[\e[01;30m\]"
   local GREEN="\[\e[0;32m\]"
   local RESET="\[\e[01;39m\]"
-  local ORANGE="\[\e[38;5;202m\]"
 
   ## Symbols ##
   local DASH="─"
@@ -225,16 +224,18 @@ set_prompt () {
 
   ## Nix shell
   if [ -n "$IN_NIX_SHELL" ]; then
-    PS1_NIX_SHELL="$RED[${DARK_GRAY}nix$RED]$DASH"
+    PS1_NIX_SHELL="[${DARK_GRAY}nix$RED]$DASH"
   else
     PS1_NIX_SHELL=""
   fi
 
   ## tmux
-  UNSTYLED_TMUX_PANE=$(tmux list-panes -t "$TMUX_PANE" -F '#S' | head -n1)
   if [[ -n "$TMUX_PANE" ]]; then
-    PS1_TMUX_PANE="$RED[$ORANGE$UNSTYLED_TMUX_PANE$RED]$DASH"
+    UNSTYLED_TMUX_PANE=$(tmux list-panes -t "$TMUX_PANE" -F '#S' | head -n1)
+    PS1_TMUX_PANE="[$DARK_YELLOW$UNSTYLED_TMUX_PANE$RED]$DASH"
+    PS1_TMUX_PANE_LEN=${#UNSTYLED_TMUX_PANE}+3
   else
+    PS1_TMUX_PANE_LEN=${#UNSTYLED_TMUX_PANE}+3
     PS1_TMUX_PANE=""
   fi
 
@@ -623,5 +624,6 @@ export NIX_CONFIG="experimental-features = nix-command flakes"
 #source $HOME/.config/direnv/direnvrc
 #eval "$(direnv hook bash)"
 
-neofetch --color_blocks off
-fortune | cowsay-rando | lolcat
+#neofetch --color_blocks off
+#fortune | cowsay-rando | lolcat
+random-bash-greeting

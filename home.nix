@@ -36,6 +36,7 @@
     ".vim".source = ./.vim;
     ".scripts".source = ./.scripts;
     ".tmux.conf".source = ./.tmux.conf;
+    ".neofetchrc".source = ./.neofetchrc;
   };
 
   # The home.packages option allows you to install Nix packages into your

@@ -1,0 +1,16 @@
+#! /bin/bash
+cowmode[0]="cowsay"
+cowmode[1]="cowthink"
+
+size=${#cowmode[@]}
+index=$(($RANDOM % $size))
+cowmode_choice=${cowmode[$index]}
+
+if type shuf > /dev/null; then
+  cowfile="$(eval "$cowmode_choice" -l | sed "1 d" | tr ' ' '\n' | shuf -n 1)"
+else
+  cowfiles=( $(eval "$cowmode_choice" -l | sed "1 d") );
+  cowfile=${cowfiles($(($RANDOM % ${#cowfiles[*]})))}
+fi
+
+neofetch --config ~/.config/home-manager/.neofetchrc --ascii "$(fortune | eval ${cowmode[$index]} -f $cowfile -W 30)"
