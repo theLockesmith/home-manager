@@ -30,7 +30,7 @@
     # '';
 
     ".vimrc".source = ./.vimrc;
-    ".bashrc".source = ./.bashrc;
+    ".extrabashrc".source = ./.extrabashrc;
     ".zshrc".source = ./.zshrc;
     #".byobu".source = ./.byobu;
     ".vim".source = ./.vim;
@@ -75,6 +75,8 @@
     pkgs.neo-cowsay
     pkgs.fortune
     pkgs.lolcat
+    pkgs.powerline
+    pkgs.entr
 
   ];
 
@@ -91,6 +93,14 @@
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
+  };
+
+  # Allow Home Manager to manage bash
+  programs.bash = {
+    enable = true;
+    bashrcExtra = ''
+      . ~/.extrabashrc
+    '';
   };
 
   programs.git = {
@@ -113,9 +123,6 @@
     enableBashIntegration = true;
     nix-direnv.enable = true;
   };
-
-  # Allow Home Manager to manage bash.
-  programs.bash.enable = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
