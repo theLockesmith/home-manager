@@ -1,9 +1,16 @@
 #! /bin/sh
 
 curl -L https://nixos.org/nix/install | sh -s -- --daemon
+exec bash -l
+nix-shell -p nix-info --run "nix-info -m"
+sleep 2
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+sleep 2
 nix-channel --update
+sleep 2
 nix-shell '<home-manager>' -A install
-mkdir -p $HOME/.config/home-manager/
-git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/
-home-manager switch
+sleep 2
+mkdir -p $HOME/.config/
+git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/home-manager
+export NIX_CONFIG="experimental-features = nix-command flakes"
+home-manager switch -b backup
