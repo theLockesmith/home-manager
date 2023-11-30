@@ -93,9 +93,6 @@
     # EDITOR = "emacs";
   };
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
   programs.git = {
     enable = true;
     userName = "lockesmith";
@@ -110,4 +107,16 @@
     defaultCacheTtl = 1800;
     enableSshSupport = true;
   };
+
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true;
+    nix-direnv.enable = true;
+  };
+
+  # Allow Home Manager to manage bash.
+  programs.bash.enable = true;
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 }
