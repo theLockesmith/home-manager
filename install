@@ -8,6 +8,7 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/master.t
 sleep 2
 nix-channel --update
 sleep 2
+export NIX_CONFIG="experimental-features = nix-command flakes"
 nix-shell '<home-manager>' -A install
 sleep 2
 mkdir -p $HOME/.config/

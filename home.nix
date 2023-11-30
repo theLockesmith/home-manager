@@ -35,7 +35,8 @@
     #".byobu".source = ./.byobu;
     ".vim".source = ./.vim;
     ".scripts".source = ./.scripts;
-    ".tmux.conf".source = ./.tmux.conf;
+    ".tmux.conf".source = ./.tmux/.tmux.conf;
+    ".tmux.conf.local".source = ./.tmux/.tmux.conf.local;
     ".neofetchrc".source = ./.neofetchrc;
   };
 
@@ -75,7 +76,7 @@
     pkgs.neo-cowsay
     pkgs.fortune
     pkgs.lolcat
-    pkgs.powerline
+    pkgs.powerline-fonts
     pkgs.entr
 
   ];
