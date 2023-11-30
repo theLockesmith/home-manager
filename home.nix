@@ -70,6 +70,9 @@
     pkgs.cmatrix
     pkgs.nettools
     pkgs.fnm
+    pkgs.cowsay
+    pkgs.fortune
+    pkgs.lolcat
 
   ];
 

@@ -164,6 +164,7 @@ set_prompt () {
   local DARK_GRAY="\[\e[01;30m\]"
   local GREEN="\[\e[0;32m\]"
   local RESET="\[\e[01;39m\]"
+  local ORANGE="\[\e[38;5;202m\]"
 
   ## Symbols ##
   local DASH="─"
@@ -227,12 +228,23 @@ set_prompt () {
     PS1_NIX_SHELL="$RED[${DARK_GRAY}nix$RED]$DASH"
     PS1_NIX_SHELL_LEN=5
   else
+    PS1_NIX_SHELL=""
     PS1_NIX_SHELL_LEN=0
+  fi
+
+  ## tmux
+  if [[ -n "$TMUX_PANE" ]]; then
+    PS1_TMUX_PANE=$(tmux list-panes -t "$TMUX_PANE" -F '#S' | head -n1)
+    PS1_TMUX_PANE_LEN=${#PS1_TMUX_PANE}+3
+    PS1_TMUX_PANE="$RED[$ORANGE$(tmux list-panes -t "$TMUX_PANE" -F '#S' | head -n1)$RED]$DASH"
+  else
+    PS1_TMUX_PANE=""
+    PS1_TMUX_PANE_LEN=0
   fi
 
   ## Add username, hostname, and working directory to PS1
   ## Also dropping in nix shell notifier here
-  CUR_DIR="$RED$TOP_CORNER$DASH$RED[$USR$DARK_YELLOW@$LIGHT_CYAN$HOSTNAME$RED]$DASH$PS1_NIX_SHELL[$GREEN$(dirs)$RED]"
+  CUR_DIR="$RED$TOP_CORNER$DASH$RED[$USR$DARK_YELLOW@$LIGHT_CYAN$HOSTNAME$RED]$DASH$PS1_NIX_SHELL$PS1_TMUX_PANE[$GREEN$(dirs)$RED]"
   PS1+="$CUR_DIR"
 
   ## Python virtual environment ##
@@ -558,11 +570,11 @@ alias df='df -H'
 alias pip-update='cat requirements.txt | xargs -n 1 python3 -m pip install'
 
 ## byobu ##
-alias bb="byobu"
-alias bbs="byobu-screen"
-alias bbx="byobu-tmux"
-alias tmux="byobu-tmux"
-alias screen="byobu-screen"
+#alias bb="byobu"
+#alias bbs="byobu-screen"
+#alias bbx="byobu-tmux"
+#alias tmux="byobu-tmux"
+#alias screen="byobu-screen"
 
 ## Remove Python virtual environment from path so it's not added multiple times. ##
 PATH="${PATH//$VIRTUAL_ENV_OLD}"
@@ -612,3 +624,5 @@ export NIX_CONFIG="experimental-features = nix-command flakes"
 #source $HOME/.config/direnv/direnvrc
 #eval "$(direnv hook bash)"
 
+neofetch --color_blocks off
+fortune | cowsay-rando -f tux | lolcat
