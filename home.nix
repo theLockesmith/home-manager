@@ -35,6 +35,7 @@
     #".byobu".source = ./.byobu;
     ".vim".source = ./.vim;
     ".scripts".source = ./.scripts;
+    ".tmux.conf".source = ./.tmux.conf;
   };
 
   # The home.packages option allows you to install Nix packages into your

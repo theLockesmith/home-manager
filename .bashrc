@@ -226,20 +226,16 @@ set_prompt () {
   ## Nix shell
   if [ -n "$IN_NIX_SHELL" ]; then
     PS1_NIX_SHELL="$RED[${DARK_GRAY}nix$RED]$DASH"
-    PS1_NIX_SHELL_LEN=5
   else
     PS1_NIX_SHELL=""
-    PS1_NIX_SHELL_LEN=0
   fi
 
   ## tmux
+  UNSTYLED_TMUX_PANE=$(tmux list-panes -t "$TMUX_PANE" -F '#S' | head -n1)
   if [[ -n "$TMUX_PANE" ]]; then
-    PS1_TMUX_PANE=$(tmux list-panes -t "$TMUX_PANE" -F '#S' | head -n1)
-    PS1_TMUX_PANE_LEN=${#PS1_TMUX_PANE}+3
-    PS1_TMUX_PANE="$RED[$ORANGE$(tmux list-panes -t "$TMUX_PANE" -F '#S' | head -n1)$RED]$DASH"
+    PS1_TMUX_PANE="$RED[$ORANGE$UNSTYLED_TMUX_PANE$RED]$DASH"
   else
     PS1_TMUX_PANE=""
-    PS1_TMUX_PANE_LEN=0
   fi
 
   ## Add username, hostname, and working directory to PS1
@@ -485,7 +481,7 @@ alias fsearch='flatpak search'
 alias fuckingown='sudo chown -Rh $USER:$USER /home/$USER'
 alias pup='pip3 list --outdated --format=freeze | grep -v "^\-e" | cut -d = -f 1  | xargs -n1 pip3 install -U'
 alias speedtest='speedtest-cli'
-alias neo='clear && neofetch'
+alias neo='clear && resh'
 alias wine='wine 2>~/.wine.error.log'
 alias tclock='tty-clock -s -c -t -n -C 5'
 alias matrix='cmatrix -a -C magenta'
@@ -509,6 +505,9 @@ alias video='lspci -k | grep -EA3 "VGA|3D|Display"'
 alias x='exit'
 alias whatsmyip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias jwatch='journalctl -f --output cat -u'
+alias switch='nix-collect-garbage; home-manager switch'
+alias cowsay-rando='$HOME/.scripts/cowsay-rando'
+alias randosay='cowsay-rando'
 
 ## Editors ##
 alias vi='$HOME/.scripts/vi'
@@ -625,4 +624,4 @@ export NIX_CONFIG="experimental-features = nix-command flakes"
 #eval "$(direnv hook bash)"
 
 neofetch --color_blocks off
-fortune | cowsay-rando -f tux | lolcat
+fortune | cowsay-rando | lolcat
