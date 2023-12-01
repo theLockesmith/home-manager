@@ -8,22 +8,23 @@ Programs, services, dotfiles, and configs backed up and managed with [home-manag
 [Just run it](#put-it-all-together)  
 
 
-## Prerequisites
-This is built with [Nix][2].  
+## Installation
+This build would not be possible without [Nix][2].  
 If using an operating system other than NixOS, install Nix.  
 ### Multi-user Installation:
 ```zsh
-sh <(curl -L https://nixos.org/nix/install) --daemon
+curl -L https://nixos.org/nix/install | sh -s -- --daemon
 ```
 
 ### Single-user Installation:
 ```zsh
-sh <(curl -L https://nixos.org/nix/install) --no-daemon
+curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
 ```
-## Installation
+
 Visit the [community docs][3] for more info.
 
 ### Add the appropriate channel
+Nix channels are what provide package stability. The master channel is the current stable branch.
 
 #### Master or unstable channel:
 ```zsh
@@ -39,11 +40,13 @@ nix-channel --update
 ***Change the release version to match your release***
 
 #### Install Home Manager to nix
+Now that your channel is added, install Home Manager via Nix.
 ```zsh
 nix-shell '<home-manager>' -A install
 ```
 
 ### Source Home Manager script
+### ***This step is only necessary if you don't plan to let Home Manager manage your dotfiles.***
 ```zsh
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 ```
@@ -54,14 +57,14 @@ echo ". \"$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh\"" >> $HOME/.profi
 ```
 
 ### Clone the repository
-Clone the repository to the home manager directory:
+Clone the repository (and all submodules) to the home-manager directory:
 ```zsh
 mkdir -p $HOME/.config/home-manager/
-git clone https://github.com/theLockesmith/home-manager.git $HOME/.config/
+git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/home-manager
 ```
 
 ### Use Home Manager to load your home
-If everything goes as planned, you can build build your home directory out by running:
+If everything goes as planned, you can deploy your home environment by running:
 ```zsh
 home-manager switch
 ```
