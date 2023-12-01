@@ -6,7 +6,7 @@ RESET="\e[01;39m"
 if ! command -v nix; then
   echo $ANNOUNCE *Nix not detected. Installing now.* $RESET
   # Install Nix if not already installed
-  curl -L https://nixos.org/nix/install | sh -- --daemon --yes
+  curl -L https://nixos.org/nix/install | sh -s -- --daemon --yes
 
   source $HOME/.nix-profile/etc/profile.d/nix.sh
 fi

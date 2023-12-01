@@ -73,5 +73,5 @@ sh <(curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/i
 ```
 
 [1]: https://github.com/nix-community/home-manager
-[2]: https://nixos.org/download.html
+[2]: https://nix.dev/install-nix
 [3]: https://nix-community.github.io/home-manager/index.html
