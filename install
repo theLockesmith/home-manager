@@ -38,6 +38,7 @@ nix-shell '<home-manager>' -A install
 
 echo $ANNOUNCE *Build your home.* $RESET
 home-manager switch -b backup
+. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
 echo $ANNOUNCE *Installing fonts.* $RESET
 # Download font
