@@ -4,7 +4,7 @@ Programs, services, dotfiles, and configs backed up and managed with [home-manag
 
 ## Glossary
 [Manual Install](#manual-install)  
-[Install Script](#put-it-all-together)  
+[Automated Install](#automated-installer)  
 
 
 # Manual Install
@@ -68,7 +68,7 @@ If everything goes as planned, you can deploy your home environment by running:
 home-manager switch
 ```
 
-# Install Script
+# Automated Installer
 This install script will automate the entire process. It uses default locations and backs up your current .bashrc and .profile.
 ```zsh
 curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/install | sh
