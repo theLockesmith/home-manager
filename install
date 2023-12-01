@@ -1,7 +1,7 @@
 #! /bin/sh
 
-local ANNOUNCE="\[\e[38;5;214m\]"
-local RESET="\[\e[01;39m\]"
+ANNOUNCE="\[\e[38;5;214m\]"
+RESET="\[\e[01;39m\]"
 
 echo $ANNOUNCE *Installing Nix* $RESET
 ## Install Nix
