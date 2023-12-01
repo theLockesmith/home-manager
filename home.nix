@@ -76,7 +76,7 @@
     pkgs.neo-cowsay
     pkgs.fortune
     pkgs.lolcat
-    pkgs.powerline-fonts
+    pkgs.powerline
     pkgs.entr
 
   ];
