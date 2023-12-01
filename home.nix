@@ -78,6 +78,7 @@
     pkgs.lolcat
     pkgs.powerline
     pkgs.entr
+    pkgs.contconfig
 
   ];
 
