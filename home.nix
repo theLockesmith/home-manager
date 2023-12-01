@@ -36,7 +36,7 @@
     ".vim".source = ./.vim;
     ".scripts".source = ./.scripts;
     ".tmux.conf".source = ./.tmux/.tmux.conf;
-    ".tmux.conf.local".source = ./.tmux/.tmux.conf.local;
+    ".tmux.conf.local".source = ./.tmux.conf.local;
     ".neofetchrc".source = ./.neofetchrc;
   };
 
