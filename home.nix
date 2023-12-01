@@ -29,15 +29,15 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
 
-    ".vimrc".source = ./.vimrc;
-    ".extrabashrc".source = ./.extrabashrc;
-    ".zshrc".source = ./.zshrc;
+    ".vimrc".source = ./dotfiles/.vimrc;
+    ".extrabashrc".source = ./dotfiles/.bashrc;
+    ".zshrc".source = ./dotfiles/.zshrc;
     #".byobu".source = ./.byobu;
     ".vim".source = ./.vim;
     ".scripts".source = ./.scripts;
     ".tmux.conf".source = ./.tmux/.tmux.conf;
-    ".tmux.conf.local".source = ./.tmux.conf.local;
-    ".neofetchrc".source = ./.neofetchrc;
+    ".tmux.conf.local".source = ./dotfiles/.tmux.conf.local;
+    ".neofetchrc".source = ./dotfiles/.neofetchrc;
   };
 
   # The home.packages option allows you to install Nix packages into your
