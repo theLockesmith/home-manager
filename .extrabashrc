@@ -506,7 +506,7 @@ alias video='lspci -k | grep -EA3 "VGA|3D|Display"'
 alias x='exit'
 alias whatsmyip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias jwatch='journalctl -f --output cat -u'
-alias switch='nix-collect-garbage; home-manager switch'
+alias switch='nix-collect-garbage; home-manager switch; tmux kill-server; exec bash -l'
 alias cowsay-rando='$HOME/.scripts/cowsay-rando'
 alias randosay='cowsay-rando'
 
