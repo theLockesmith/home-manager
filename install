@@ -4,45 +4,38 @@ ANNOUNCE="\e[38;5;214m"
 RESET="\e[01;39m"
 
 if command -v nix; then
-  echo $ANNOUNCE *Post-Nix activation* $RESET
-  # This is required after Nix is installed.
-  # I actually don't think this is a requirement.
-  #nix-shell -p nix-info --run "nix-info -m"
-  sleep 2
-
   echo $ANNOUNCE *Adding Home Manager Nix channel* $RESET
   # Install Home Manager
   nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-  sleep 2
   nix-channel --update
-  sleep 2
 
-  echo $ANNOUNCE *Installing Home Manager* $RESET
+  echo $ANNOUNCE *Backing up bashrc and profile* $RESET
   mv $HOME/.bashrc $HOME/.bashrc.bak
   mv $HOME/.profile $HOME/.profile.bak
-  echo $ANNOUNCE *bashrc and profile backed up* $RESET
+
+  echo $ANNOUNCE *Installing Home Manager
   export NIX_CONFIG="experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env"
   nix-shell '<home-manager>' -A install
-  sleep 2
 
   echo $ANNOUNCE *Creating necessary directories* $RESET
   # Make sure required directories exist
   mkdir -p $HOME/.config/
   mkdir -p $HOME/.config/fontconfig/conf.d/
   mkdir -p $HOME/.local/share/fonts/
+  # Home Manager creates it's own directory, but we need that to clone into.
+  # Back up default home-manager directory.
+  mv $HOME/.config/home-manager $HOME/.config/home-manager-backup
 
   echo $ANNOUNCE *Loading Home Manager* $RESET
   # Load Home
   git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/home-manager
   home-manager switch -b backup
-  sleep 2
 
   echo $ANNOUNCE *Installing fonts* $RESET
   # Download fonts
   wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
   wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
 
-  echo $ANNOUNCE *Installing fonts* $RESET
   # Move them to the proper locations and load them
   mv PowerlineSymbols.otf ~/.local/share/fonts/
   mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
