@@ -43,4 +43,4 @@ home-manager switch -b backup
 )
 
 # Reload the shell
-exec bash -l
+exec bash
