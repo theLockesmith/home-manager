@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 ANNOUNCE="\e[38;5;214m"
 RESET="\e[01;39m"
@@ -10,7 +10,7 @@ if ! command -v nix; then
   sleep 2
 
   echo $ANNOUNCE *Sourcing nix.sh.* $RESET
-  . /etc/profile.d/nix.sh
+  source /etc/profile.d/nix.sh
 fi
 
 
@@ -54,6 +54,6 @@ mv ./CaskaydiaCoveNFNerdFontMono-Regular.ttf $HOME/.local/share/fonts
 fc-cache -vf $HOME/.local/share/fonts
 
 # You're done! Start a new shell session for changes to take effect!
-. /etc/profile.d/nix.sh
-. $HOME/.bashrc
+source "/etc/profile.d/nix.sh"
+source "$HOME/.bashrc"
 echo $ANNOUNCE *Installation Complete! You free to use your new shell, however a new session is recommended.* $RESET
