@@ -3,62 +3,52 @@
 ANNOUNCE="\e[38;5;214m"
 RESET="\e[01;39m"
 
-if command -v nix; then
-  echo $ANNOUNCE *Adding Home Manager Nix channel* $RESET
-  # Install Home Manager
-  nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-  nix-channel --update
+if ! command -v nix; then
+echo $ANNOUNCE *Nix not detected. Installing now.* $RESET
+  # Install Nix if not already installed
+  sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 
-  echo $ANNOUNCE *Backing up bashrc and profile* $RESET
-  mv $HOME/.bashrc $HOME/.bashrc.bak
-  mv $HOME/.profile $HOME/.profile.bak
-
-  echo $ANNOUNCE *Creating necessary directories* $RESET
-  # Make sure required directories exist
-  mkdir -p $HOME/.config/fontconfig/conf.d/
-  mkdir -p $HOME/.local/share/fonts/
-
-  echo $ANNOUNCE *Cloning project repository* $RESET
-  # Load Home
-  git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/home-manager
-
-  echo $ANNOUNCE *Installing Home Manager* $RESET
-  export NIX_CONFIG="experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env"
-  nix-shell '<home-manager>' -A install
-
-  echo $ANNOUNCE *Build your home* $RESET
-  home-manager switch -b backup
-
-  	
-
-  #curl -fLo "CascadiaCode Nerd Font Complete.otf" \
-  #https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/CascadiaCode
-  #https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/CascadiaCode.zip
-
-  echo $ANNOUNCE *Installing fonts* $RESET
-
-  curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.tar.xz
-  mkdir -p ./cascadia
-  tar -xvf CascadiaCode.tar.xz -C ./cascadia
-  rm -f ./CascadiaCode.tar.xz
-  nerd-font-patcher ./cascadia/CaskaydiaCoveNerdFont-Regular.ttf --progressbars --mono --use-single-width-glyphs --complete
-  rm -rf ./cascadia
-  mv ./CaskaydiaCoveNFNerdFontMono-Regular.ttf $HOME/.local/share/fonts
-
-  # Download fonts
-  #curl -O https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
-  #curl -O https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
-  #curl -O https://github.com/Templarian/MaterialDesign-Font/raw/master/MaterialDesignIconsDesktop.ttf
-
-  # Move them to the proper locations and load them
-  #mv PowerlineSymbols.otf $HOME/.local/share/fonts/
-  #mv MaterialDesignIconsDesktop.ttf $HOME/.local/share/fonts
-  #mv 10-powerline-symbols.conf $HOME/.config/fontconfig/conf.d/
-
-  fc-cache -vf $HOME/.local/share/fonts
-
-  echo $ANNOUNCE *Installation Complete. You should now reload your shell.* $RESET
-  exec bash -l
-else
-  echo $ANNOUNCE *Nix is not installed. Please visit https://nixos.org/download.html for instructions*
+  source $HOME/.nix-profile/etc/profile.d/nix.sh
 fi
+
+
+echo $ANNOUNCE *Adding Home Manager Nix channel.* $RESET
+# Install Home Manager
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --update
+
+echo $ANNOUNCE *Backing up bashrc and profile.* $RESET
+mv $HOME/.bashrc $HOME/.bashrc.bak
+mv $HOME/.profile $HOME/.profile.bak
+
+echo $ANNOUNCE *Creating necessary directories.* $RESET
+# Make sure required directories exist
+mkdir -p $HOME/.config/fontconfig/conf.d/
+mkdir -p $HOME/.local/share/fonts/
+
+echo $ANNOUNCE *Cloning project repository.* $RESET
+# Load Home
+git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/home-manager
+
+echo $ANNOUNCE *Installing Home Manager.* $RESET
+export NIX_CONFIG="experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env"
+nix-shell '<home-manager>' -A install
+
+echo $ANNOUNCE *Build your home.* $RESET
+home-manager switch -b backup
+
+echo $ANNOUNCE *Installing fonts.* $RESET
+# Download font
+curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.tar.xz
+mkdir -p ./cascadia
+tar -xvf CascadiaCode.tar.xz -C ./cascadia
+rm -f ./CascadiaCode.tar.xz
+nerd-font-patcher ./cascadia/CaskaydiaCoveNerdFont-Regular.ttf --progressbars --mono --use-single-width-glyphs --complete
+rm -rf ./cascadia
+mv ./CaskaydiaCoveNFNerdFontMono-Regular.ttf $HOME/.local/share/fonts
+
+# Install font
+fc-cache -vf $HOME/.local/share/fonts
+
+# You're done! Start a new shell session for changes to take effect!
+echo $ANNOUNCE *Installation Complete. You should now reload your shell.* $RESET
