@@ -13,4 +13,5 @@ else
   cowfile=${cowfiles($(($RANDOM % ${#cowfiles[*]})))}
 fi
 
-neofetch --config ~/.config/home-manager/.neofetchrc --ascii "$(fortune | eval ${cowmode[$index]} -f $cowfile -W 30)"
+# neofetch --config ~/.config/home-manager/.neofetchrc --ascii "$(fortune -s -a | eval ${cowmode[$index]} -f $cowfile -W 30)"
+neofetch --ascii "$(fortune -s -a | eval ${cowmode[$index]} -f $cowfile -W 30)"

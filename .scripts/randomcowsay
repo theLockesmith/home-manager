@@ -12,4 +12,4 @@ else
   cowfiles=( $(eval "$cowmode_choice" -l | sed "1 d") );
   cowfile=${cowfiles($(($RANDOM % ${#cowfiles[*]})))}
 fi
-fortune | eval ${cowmode[$index]} -f "$cowfile" | lolcat
+fortune -a | eval ${cowmode[$index]} -f "$cowfile" | lolcat
