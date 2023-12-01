@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 
 ANNOUNCE="\e[38;5;214m"
 RESET="\e[01;39m"
@@ -10,7 +10,7 @@ if ! command -v nix; then
   sleep 2
 
   echo $ANNOUNCE *Sourcing nix.sh.* $RESET
-  source /etc/profile.d/nix.sh
+  . /etc/profile.d/nix.sh
 fi
 
 
@@ -54,6 +54,20 @@ mv ./CaskaydiaCoveNFNerdFontMono-Regular.ttf $HOME/.local/share/fonts
 fc-cache -vf $HOME/.local/share/fonts
 
 # You're done! Start a new shell session for changes to take effect!
-source "/etc/profile.d/nix.sh"
-source "$HOME/.bashrc"
+. "/etc/profile.d/nix.sh"
+. "$HOME/.bashrc"
+echo $ANNOUNCE *Installation Complete! You free to use your new shell, however a new session is recommended.* $RESET
+
+if [ -n "$BASH_VERSION" ]; then
+  source /etc/profile.d/nix.sh
+  # Source the .bashrc file
+  source $HOME/.bashrc
+  # or, equivalently: . $HOME/.bashrc
+
+  # Continue with more commands in the script
+  echo "Sourcing .bashrc in the current shell session."
+else
+  echo $ANNOUNCE *Your current session could not be refreshed.* $RESET
+fi
+
 echo $ANNOUNCE *Installation Complete! You free to use your new shell, however a new session is recommended.* $RESET
