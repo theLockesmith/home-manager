@@ -1,7 +1,7 @@
 #! /bin/sh
 
-ANNOUNCE="\e[38;5;214m"
-RESET="\e[01;39m"
+ANNOUNCE="\[\e[01;33m\]"
+RESET="\[\e[01;39m\]"
 
 if ! command -v nix; then
   echo "$ANNOUNCE *Nix not detected. Installing now.* $RESET"
