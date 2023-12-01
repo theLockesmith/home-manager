@@ -3,12 +3,11 @@ Programs, services, dotfiles, and configs backed up and managed with [home-manag
 
 
 ## Glossary
-[Prerequisites](#prerequisites)  
-[Installation](#installation)  
+[Manual Install](#manual-install)  
 [Install Script](#put-it-all-together)  
 
 
-## Installation
+# Manual Install
 This build would not be possible without [Nix][2].  
 If using an operating system other than NixOS, install Nix.  
 ### Multi-user Installation:
@@ -69,7 +68,7 @@ If everything goes as planned, you can deploy your home environment by running:
 home-manager switch
 ```
 
-## Install Script
+# Install Script
 This install script will automate the entire process. It uses default locations and backs up your current .bashrc and .profile.
 ```zsh
 curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/install | sh
