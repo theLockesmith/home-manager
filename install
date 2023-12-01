@@ -4,43 +4,43 @@ ANNOUNCE="\e[38;5;214m"
 RESET="\e[01;39m"
 
 if ! command -v nix; then
-  echo $ANNOUNCE *Nix not detected. Installing now.* $RESET
+  echo "$ANNOUNCE *Nix not detected. Installing now.* $RESET"
   # Install Nix if not already installed
   curl -L https://nixos.org/nix/install | sh -s -- --daemon --yes
   sleep 2
 
-  echo $ANNOUNCE *Sourcing nix.sh.* $RESET
+  echo "$ANNOUNCE *Sourcing nix.sh.* $RESET"
   . /etc/profile.d/nix.sh
 fi
 
 
-echo $ANNOUNCE *Adding Home Manager Nix channel.* $RESET
+echo "$ANNOUNCE *Adding Home Manager Nix channel.* $RESET"
 # Install Home Manager
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 
-echo $ANNOUNCE *Backing up bashrc and profile.* $RESET
+echo "$ANNOUNCE *Backing up bashrc and profile.* $RESET"
 mv $HOME/.bashrc $HOME/.bashrc.bak
 mv $HOME/.profile $HOME/.profile.bak
 
-echo $ANNOUNCE *Creating necessary directories.* $RESET
+echo "$ANNOUNCE *Creating necessary directories.* $RESET"
 # Make sure required directories exist
 mkdir -p $HOME/.config/fontconfig/conf.d/
 mkdir -p $HOME/.local/share/fonts/
 
-echo $ANNOUNCE *Cloning project repository.* $RESET
+echo "$ANNOUNCE *Cloning project repository.* $RESET"
 # Load Home
 git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/home-manager
 
-echo $ANNOUNCE *Installing Home Manager.* $RESET
+echo "$ANNOUNCE *Installing Home Manager.* $RESET"
 export NIX_CONFIG="experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env"
 nix-shell '<home-manager>' -A install
 
-echo $ANNOUNCE *Build your home.* $RESET
+echo "$ANNOUNCE *Build your home.* $RESET"
 home-manager switch -b backup
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
-echo $ANNOUNCE *Installing fonts.* $RESET
+echo "$ANNOUNCE *Installing fonts.* $RESET"
 # Download font
 curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.tar.xz
 mkdir -p ./cascadia
@@ -54,4 +54,6 @@ mv ./CaskaydiaCoveNFNerdFontMono-Regular.ttf $HOME/.local/share/fonts
 fc-cache -vf $HOME/.local/share/fonts
 
 # You're done! Start a new shell session for changes to take effect!
-echo $ANNOUNCE *Installation Complete! You free to use your new shell, however a new session is recommended.* $RESET
+. /etc/profile.d/nix.sh
+. $HOME/.bashrc
+echo "$ANNOUNCE *Installation Complete! You free to use your new shell, however a new session is recommended.* $RESET"
