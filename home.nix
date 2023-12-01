@@ -78,7 +78,12 @@
     pkgs.lolcat
     pkgs.powerline
     pkgs.entr
-    pkgs.fontconfig
+    #pkgs.fontconfig
+    #pkgs.material-design-icons
+    pkgs.nerd-font-patcher
+    pkgs.argparse
+    pkgs.python311Packages.fontforge
+    pkgs.fontforge
 
   ];
 
