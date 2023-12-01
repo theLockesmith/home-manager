@@ -69,7 +69,7 @@ home-manager switch
 ## Put it all together
 to get started immediately, run the install script:
 ```zsh
-sh <(curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/install)
+curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/install | sh
 ```
 
 [1]: https://github.com/nix-community/home-manager
