@@ -20,7 +20,7 @@ if command -v nix; then
   mv $HOME/.bashrc $HOME/.bashrc.bak
   mv $HOME/.profile $HOME/.profile.bak
   echo $ANNOUNCE *bashrc and profile backed up* $RESET
-  export NIX_CONFIG="experimental-features = nix-command flakes"
+  export NIX_CONFIG="experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env"
   nix-shell '<home-manager>' -A install
   sleep 2
 
@@ -32,9 +32,9 @@ if command -v nix; then
 
   echo $ANNOUNCE *Loading Home Manager* $RESET
   # Load Home
-  export NIX_CONFIG="experimental-features = nix-command flakes"
   git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/home-manager
   home-manager switch -b backup
+  sleep 2
 
   echo $ANNOUNCE *Installing fonts* $RESET
   # Download fonts
