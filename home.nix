@@ -37,7 +37,7 @@
     ".scripts".source = ./.scripts;
     ".tmux.conf".source = ./.tmux/.tmux.conf;
     ".tmux.conf.local".source = ./dotfiles/.tmux.conf.local;
-    ".neofetchrc".source = ./dotfiles/.neofetchrc;
+    ".config/neofetch/config.conf".source = ./dotfiles/.neofetchrc;
   };
 
   # The home.packages option allows you to install Nix packages into your
@@ -78,7 +78,7 @@
     pkgs.lolcat
     pkgs.powerline
     pkgs.entr
-    pkgs.contconfig
+    pkgs.fontconfig
 
   ];
 

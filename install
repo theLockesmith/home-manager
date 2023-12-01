@@ -3,47 +3,51 @@
 ANNOUNCE="\e[38;5;214m"
 RESET="\e[01;39m"
 
-echo $ANNOUNCE *Post-Nix activation* $RESET
-# This is required after Nix is installed.
-nix-shell -p nix-info --run "nix-info -m"
-sleep 2
+if command -v nix; then
+  echo $ANNOUNCE *Post-Nix activation* $RESET
+  # This is required after Nix is installed.
+  nix-shell -p nix-info --run "nix-info -m"
+  sleep 2
 
-echo $ANNOUNCE *Adding Home Manager Nix channel* $RESET
-# Install Home Manager
-nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-sleep 2
-nix-channel --update
-sleep 2
+  echo $ANNOUNCE *Adding Home Manager Nix channel* $RESET
+  # Install Home Manager
+  nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+  sleep 2
+  nix-channel --update
+  sleep 2
 
-echo $ANNOUNCE *Installing Home Manager* $RESET
-mv $HOME/.bashrc $HOME/.bashrc.bak
-mv $HOME/.profile $HOME/.profile.bak
-echo $ANNOUNCE *bashrc and profile backed up* $RESET
-export NIX_CONFIG="experimental-features = nix-command flakes"
-nix-shell '<home-manager>' -A install
-sleep 2
+  echo $ANNOUNCE *Installing Home Manager* $RESET
+  mv $HOME/.bashrc $HOME/.bashrc.bak
+  mv $HOME/.profile $HOME/.profile.bak
+  echo $ANNOUNCE *bashrc and profile backed up* $RESET
+  export NIX_CONFIG="experimental-features = nix-command flakes"
+  nix-shell '<home-manager>' -A install
+  sleep 2
 
-echo $ANNOUNCE *Creating necessary directories* $RESET
-# Make sure required directories exist
-mkdir -p $HOME/.config/
-mkdir -p $HOME/.config/fontconfig/conf.d/
-mkdir -p $HOME/.local/share/fonts/
+  echo $ANNOUNCE *Creating necessary directories* $RESET
+  # Make sure required directories exist
+  mkdir -p $HOME/.config/
+  mkdir -p $HOME/.config/fontconfig/conf.d/
+  mkdir -p $HOME/.local/share/fonts/
 
-echo $ANNOUNCE *Loading Home Manager* $RESET
-# Load Home
-export NIX_CONFIG="experimental-features = nix-command flakes"
-git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/home-manager
-home-manager switch -b backup
+  echo $ANNOUNCE *Loading Home Manager* $RESET
+  # Load Home
+  export NIX_CONFIG="experimental-features = nix-command flakes"
+  git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/home-manager
+  home-manager switch -b backup
 
-echo $ANNOUNCE *Installing fonts* $RESET
-# Download fonts
-wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
-wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+  echo $ANNOUNCE *Installing fonts* $RESET
+  # Download fonts
+  wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+  wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
 
-echo $ANNOUNCE *Installing fonts* $RESET
-# Move them to the proper locations and load them
-mv PowerlineSymbols.otf ~/.local/share/fonts/
-mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
-fc-cache -vf ~/.local/share/fonts
+  echo $ANNOUNCE *Installing fonts* $RESET
+  # Move them to the proper locations and load them
+  mv PowerlineSymbols.otf ~/.local/share/fonts/
+  mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
+  fc-cache -vf ~/.local/share/fonts
 
-echo $ANNOUNCE *Installation Complete. You should now reload your shell.* $RESET
+  echo $ANNOUNCE *Installation Complete. You should now reload your shell.* $RESET
+else
+  echo $ANNOUNCE *Nix is not installed. Please visit https://nixos.org/download.html for instructions*
+fi
