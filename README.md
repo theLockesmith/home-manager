@@ -12,18 +12,16 @@ Programs, services, dotfiles, and configs backed up and managed with [home-manag
 This is built with [Nix][2].  
 If using an operating system other than NixOS, install Nix.  
 ### Multi-user Installation:
-[multi-user install docs][3]
 ```zsh
-curl -L https://nixos.org/nix/install | sh -s -- --daemon
+sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
 
 ### Single-user Installation:
-[single-user install docs][4]
 ```zsh
-curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
+sh <(curl -L https://nixos.org/nix/install) --no-daemon
 ```
 ## Installation
-Visit the [community docs][5] for more info.
+Visit the [community docs][3] for more info.
 
 ### Add the appropriate channel
 
@@ -71,11 +69,9 @@ home-manager switch
 ## Put it all together
 to get started immediately, run the install script:
 ```zsh
-curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/install | sh
+sh <(curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/install)
 ```
 
 [1]: https://github.com/nix-community/home-manager
-[2]: https://nix.dev/install-nix
-[3]: https://nixos.org/manual/nix/stable/installation/multi-user.html
-[4]: https://nixos.org/manual/nix/stable/installation/single-user.html
-[5]: https://nix-community.github.io/home-manager/index.html
+[2]: https://nixos.org/download.html
+[3]: https://nix-community.github.io/home-manager/index.html
