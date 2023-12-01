@@ -13,7 +13,7 @@ if command -v nix; then
   mv $HOME/.bashrc $HOME/.bashrc.bak
   mv $HOME/.profile $HOME/.profile.bak
 
-  echo $ANNOUNCE *Installing Home Manager
+  echo $ANNOUNCE *Installing Home Manager* $RESET
   export NIX_CONFIG="experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env"
   nix-shell '<home-manager>' -A install
 
