@@ -10,7 +10,7 @@ if ! command -v nix; then
   sleep 2
 
   echo $ANNOUNCE *Sourcing nix.sh.* $RESET
-  source /etc/profile.d/nix.sh
+  . /etc/profile.d/nix.sh
 fi
 
 
