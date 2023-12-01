@@ -6,7 +6,8 @@ RESET="\e[01;39m"
 if command -v nix; then
   echo $ANNOUNCE *Post-Nix activation* $RESET
   # This is required after Nix is installed.
-  nix-shell -p nix-info --run "nix-info -m"
+  # I actually don't think this is a requirement.
+  #nix-shell -p nix-info --run "nix-info -m"
   sleep 2
 
   echo $ANNOUNCE *Adding Home Manager Nix channel* $RESET
