@@ -8,6 +8,7 @@ if ! command -v nix; then
   # Install Nix if not already installed
   curl -L https://nixos.org/nix/install | sh -s -- --daemon --yes
 
+  echo $ANNOUNCE *Sourcing nix.sh.* $RESET
   source /etc/profile.d/nix.sh
 fi
 
