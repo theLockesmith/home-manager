@@ -69,8 +69,8 @@ If everything goes as planned, you can deploy your home environment by running:
 home-manager switch
 ```
 
-## Put it all together
-to get started immediately, run the install script:
+## Install Script
+This install script will automate the entire process. It uses default locations and backs up your current .bashrc and .profile.
 ```zsh
 curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/install | sh
 ```

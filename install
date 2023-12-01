@@ -20,8 +20,8 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/master.t
 nix-channel --update
 
 echo $ANNOUNCE *Backing up bashrc and profile.* $RESET
-#mv $HOME/.bashrc $HOME/.bashrc.bak
-#mv $HOME/.profile $HOME/.profile.bak
+mv $HOME/.bashrc $HOME/.bashrc.bak
+mv $HOME/.profile $HOME/.profile.bak
 
 echo $ANNOUNCE *Creating necessary directories.* $RESET
 # Make sure required directories exist
