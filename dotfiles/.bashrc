@@ -622,7 +622,7 @@ export NIX_CONFIG="experimental-features = nix-command flakes"
 
 ## hook nix-direnv
 #source $HOME/.config/direnv/direnvrc
-#eval "$(direnv hook bash)"
+eval "$(direnv hook bash)"
 
 #neofetch --color_blocks off
 #fortune | cowsay-rando | lolcat
