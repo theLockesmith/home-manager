@@ -74,6 +74,9 @@ This install script will automate the entire process. It uses default locations 
 . <(curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/install)
 ```
 
+# Known Issues
+If you get an error that looks like `error: could not set permissions on '/nix/var/nix/profiles/per-user' to 755: Operation not permitted` or something similar, this is a known Nix issue. The only resolution I've found is to reboot.
+
 [1]: https://github.com/nix-community/home-manager
 [2]: https://nix.dev/install-nix
 [3]: https://nix-community.github.io/home-manager/index.html

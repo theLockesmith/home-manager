@@ -13,6 +13,8 @@ unbind C-b
 set-option -g prefix C-a
 bind-key C-a send-prefix
 
+set -u pane-active-border
+set -ug pane-active-border
 set -g pane-active-border fg=#FF6405
 set -ag pane-active-border bg=#FF6405
 
