@@ -71,7 +71,7 @@ home-manager switch
 # Automated Installer
 This install script will automate the entire process. It uses default locations and backs up your current .bashrc and .profile.
 ```zsh
-. <(curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/install)
+. <(curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/.scripts/home-manager-switch)
 ```
 
 # Known Issues
