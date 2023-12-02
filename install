@@ -24,7 +24,7 @@ mv -f $HOME/.bashrc $HOME/.bashrc.bak
 mv -f $HOME/.profile $HOME/.profile.bak
 mv -f $HOME/.scripts $HOME/.scripts.bak
 mv -f $HOME/.zshrc $HOME/.zshrc.bak
-mv -f $HOME/.bash_profile $HOME/.bash_profile
+mv -f $HOME/.bash_profile $HOME/.bash_profile.bak
 mv -f $HOME/.config/neofetch $HOME/.config/neofetch.bak
 mv -f $HOME/.vimrc $HOME/.vimrc.bak
 
