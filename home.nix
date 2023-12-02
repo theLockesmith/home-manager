@@ -79,13 +79,13 @@
     pkgs.powerline
     pkgs.entr
     pkgs.fontconfig
-    #pkgs.material-design-icons
     pkgs.nerd-font-patcher
     pkgs.argparse
     pkgs.python311Packages.fontforge
     pkgs.fontforge
     pkgs.keepassxc
     pkgs.nextcloud-client
+    pkgs.vscodium
 
   ];
 
