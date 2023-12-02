@@ -20,13 +20,13 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/master.t
 nix-channel --update
 
 echo -e "${ANNOUNCE} *Backing up bashrc and profile.* ${RESET}"
-mv $HOME/.bashrc $HOME/.bashrc.bak
-mv $HOME/.profile $HOME/.profile.bak
-mv $HOME/.scripts $HOME/.scripts.bak
-mv $HOME/.zshrc $HOME/.zshrc.bak
-mv $HOME/.bash_profile $HOME/.bash_profile
-mv $HOME/.config/neofetch $HOME/.config/neofetch.bak
-mv $HOME/.vimrc $HOME/.vimrc.bak
+mv -f $HOME/.bashrc $HOME/.bashrc.bak
+mv -f $HOME/.profile $HOME/.profile.bak
+mv -f $HOME/.scripts $HOME/.scripts.bak
+mv -f $HOME/.zshrc $HOME/.zshrc.bak
+mv -f $HOME/.bash_profile $HOME/.bash_profile
+mv -f $HOME/.config/neofetch $HOME/.config/neofetch.bak
+mv -f $HOME/.vimrc $HOME/.vimrc.bak
 
 echo -e "${ANNOUNCE} *Creating necessary directories.* ${RESET}"
 # Make sure required directories exist
