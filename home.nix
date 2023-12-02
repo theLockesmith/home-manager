@@ -84,6 +84,8 @@
     pkgs.argparse
     pkgs.python311Packages.fontforge
     pkgs.fontforge
+    pkgs.keepassxc
+    pkgs.nextcloud-client
 
   ];
 
