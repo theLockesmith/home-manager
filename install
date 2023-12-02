@@ -20,13 +20,33 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/master.t
 nix-channel --update
 
 echo -e "${ANNOUNCE} *Backing up bashrc and profile.* ${RESET}"
-mv -f $HOME/.bashrc $HOME/.bashrc.bak
-mv -f $HOME/.profile $HOME/.profile.bak
-mv -f $HOME/.scripts $HOME/.scripts.bak
-mv -f $HOME/.zshrc $HOME/.zshrc.bak
-mv -f $HOME/.bash_profile $HOME/.bash_profile.bak
-mv -f $HOME/.config/neofetch $HOME/.config/neofetch.bak
-mv -f $HOME/.vimrc $HOME/.vimrc.bak
+if test -f $HOME/.bashrc; then
+  mv -f $HOME/.bashrc $HOME/.bashrc.bak
+fi
+
+if test -f $HOME/.profile; then
+  mv -f $HOME/.profile $HOME/.profile.bak
+fi
+
+if test -f $HOME/.scripts; then
+  mv -f $HOME/.scripts $HOME/.scripts.bak
+fi
+
+if test -f $HOME/.scripts; then
+  mv -f $HOME/.zshrc $HOME/.zshrc.bak
+fi
+
+if test -f $HOME/.bash_profile; then
+  mv -f $HOME/.bash_profile $HOME/.bash_profile.bak
+fi
+
+if test -f $HOME/.config/neofetch; then
+  mv -f $HOME/.config/neofetch $HOME/.config/neofetch.bak
+fi
+
+if test -f $HOME/.vimrc; then
+  mv -f $HOME/.vimrc $HOME/.vimrc.bak
+fi
 
 echo -e "${ANNOUNCE} *Creating necessary directories.* ${RESET}"
 # Make sure required directories exist
