@@ -66,10 +66,18 @@ else
   echo "${GREEN} *Project already exists. Skipping.* ${RESET}"
 fi
 
-echo -n "Enter your name: "
-read NAME
-echo -n "Enter your email: "
-read EMAIL
+NAME=$(git config --get user.name)
+EMAIL=$(git config --get user.email)
+
+if test -z "$NAME"; then
+  echo -n "Enter your name:\n"
+  read NAME
+fi
+
+if test -z "$EMAIL"; then
+  echo -n "Enter your email:\n"
+  read EMAIL
+fi
 
 \cp -f $HOME/.config/home-manager/home.template.nix $HOME/.config/home-manager/home.nix
 \cp -f $HOME/.config/home-manager/flake.template.nix $HOME/.config/home-manager/flake.nix
