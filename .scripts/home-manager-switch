@@ -66,6 +66,9 @@ else
   echo "${GREEN} *Project already exists. Skipping.* ${RESET}"
 fi
 
+sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/flake.nix
+sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/home.nix
+
 export NIX_CONFIG="experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env"
 if ! command -v home-manager; then
   echo "${GREEN} *Installing Home Manager.* ${RESET}"
