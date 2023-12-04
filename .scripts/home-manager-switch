@@ -6,6 +6,8 @@ GREEN="$(tput setaf 2)"
 YELLOW="$(tput setaf 3)"
 RESET="$(tput sgr0)"  # Reset color to default
 
+NEWLINE=$'\n'
+
 echo "${GREEN} *Creating necessary directories.* ${RESET}"
 # Make sure required directories exist
 mkdir -p $HOME/.config/fontconfig/conf.d/ > /dev/null 2>&1
@@ -70,12 +72,12 @@ NAME=$(git config --get user.name)
 EMAIL=$(git config --get user.email)
 
 if test -z "$NAME"; then
-  echo -n "Enter your name:\n"
+  echo -n "Enter your name:${NEWLINE}"
   read NAME
 fi
 
 if test -z "$EMAIL"; then
-  echo -n "Enter your email:\n"
+  echo -n "Enter your email:${NEWLINE}"
   read EMAIL
 fi
 
