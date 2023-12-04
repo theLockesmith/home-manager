@@ -3,7 +3,7 @@
 {
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = [ "nix-command" "flakes" "configurable-impure-env" "auto-allocate-uids" "impure-derivations" ];
   };
 
   # Home Manager needs a bit of information about you and the paths it should
