@@ -83,10 +83,8 @@
     pkgs.argparse
     pkgs.python311Packages.fontforge
     pkgs.fontforge
-    pkgs.keepassxc
-    # https://github.com/NixOS/nixpkgs/issues/82959#issuecomment-761541061
-    pkgs.nextcloud-client
-    pkgs.vscodium
+    pkgs.glibcLocales
+    pkgs.pciutils
 
   ];
 

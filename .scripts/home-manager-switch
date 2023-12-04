@@ -3,84 +3,80 @@
 ANNOUNCE="\e[38;5;214m"
 RESET="\e[01;39m"
 
+echo "${ANNOUNCE} *Creating necessary directories.* ${RESET}"
+# Make sure required directories exist
+mkdir -p $HOME/.config/fontconfig/conf.d/ > /dev/null 2>&1
+mkdir -p $HOME/.local/share/fonts/ > /dev/null 2>&1
+
 if ! command -v nix; then
-  echo -e "${ANNOUNCE} *Nix not detected. Installing now.* ${RESET}"
+  echo "${ANNOUNCE} *Nix not detected. Installing now.* ${RESET}"
   # Install Nix if not already installed
   curl -L https://nixos.org/nix/install | sh -s -- --daemon --yes
   sleep 2
 
-  echo -e "${ANNOUNCE} *Sourcing nix.sh.* ${RESET}"
+  echo "${ANNOUNCE} *Sourcing nix.sh.* ${RESET}"
   . /etc/profile.d/nix.sh
 else
-  echo -e "${ANNOUNCE} *Nix is already installed. Skipping.* ${RESET}"
+  echo "${ANNOUNCE} *Nix is already installed. Skipping.* ${RESET}"
 fi
 
 
-echo -e "${ANNOUNCE} *Adding Home Manager Nix channel.* ${RESET}"
+echo "${ANNOUNCE} *Adding Home Manager Nix channel.* ${RESET}"
 # Install Home Manager
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 
-echo -e "${ANNOUNCE} *Backing up bashrc and profile.* ${RESET}"
+echo "${ANNOUNCE} *Backing up bashrc and profile.* ${RESET}"
 if test -f $HOME/.bashrc; then
-  mv -f $HOME/.bashrc $HOME/.bashrc.bak
+  mv -f $HOME/.bashrc $HOME/.bashrc.bak > /dev/null 2>&1
 fi
 
 if test -f $HOME/.profile; then
-  mv -f $HOME/.profile $HOME/.profile.bak
+  mv -f $HOME/.profile $HOME/.profile.bak > /dev/null 2>&1
 fi
 
 if test -f $HOME/.scripts; then
-  mv -f $HOME/.scripts $HOME/.scripts.bak
+  mv -f $HOME/.scripts $HOME/.scripts.bak > /dev/null 2>&1
 fi
 
 if test -f $HOME/.scripts; then
-  mv -f $HOME/.zshrc $HOME/.zshrc.bak
+  mv -f $HOME/.zshrc $HOME/.zshrc.bak > /dev/null 2>&1
 fi
 
 if test -f $HOME/.bash_profile; then
-  mv -f $HOME/.bash_profile $HOME/.bash_profile.bak
+  mv -f $HOME/.bash_profile $HOME/.bash_profile.bak > /dev/null 2>&1
 fi
 
 if test -f $HOME/.config/neofetch; then
-  mv -f $HOME/.config/neofetch $HOME/.config/neofetch.bak
+  mv -f $HOME/.config/neofetch $HOME/.config/neofetch.bak > /dev/null 2>&1
 fi
 
 if test -f $HOME/.vimrc; then
-  mv -f $HOME/.vimrc $HOME/.vimrc.bak
-fi
-
-echo -e "${ANNOUNCE} *Creating necessary directories.* ${RESET}"
-# Make sure required directories exist
-if [ ! -d "$HOME/.config/fontconfig/conf.d" ]; then
-  mkdir -p $HOME/.config/fontconfig/conf.d/
-fi
-if [ ! -d "$HOME/.local/share/fonts"]; then
-  mkdir -p $HOME/.local/share/fonts/
+  mv -f $HOME/.vimrc $HOME/.vimrc.bak > /dev/null 2>&1
 fi
 
 if [ ! -d "$HOME/.config/home-manager" ]; then
-  echo -e "${ANNOUNCE} *Cloning project repository.* ${RESET}"
+  echo "${ANNOUNCE} *Cloning project repository.* ${RESET}"
   # Load Home
-  git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/home-manager
+  git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/home-manager > /dev/null 2>&1
 else
-  echo -e "${ANNOUNCE} *Project already exists. Skipping.* ${RESET}"
+  echo "${ANNOUNCE} *Project already exists. Skipping.* ${RESET}"
 fi
 
 export NIX_CONFIG="experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env"
 if ! command -v home-manager; then
-  echo -e "${ANNOUNCE} *Installing Home Manager.* ${RESET}"
+  echo "${ANNOUNCE} *Installing Home Manager.* ${RESET}"
   nix-shell '<home-manager>' -A install
 else
-  echo -e "${ANNOUNCE} *Home Manager already exists. Skipping.* ${RESET}"
+  echo "${ANNOUNCE} *Home Manager already exists. Skipping.* ${RESET}"
 fi
 
-echo -e "${ANNOUNCE} *Build your home.* ${RESET}"
-home-manager switch -b backup
+echo "${ANNOUNCE} *Build your home.* ${RESET}"
+home-manager switch -b backup -f $HOME/.config/home-manager/home-desktop.nix
 #. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
 if ! test -f $HOME/.local/share/fonts/CaskaydiaCoveNFNerdFontMono-Regular.ttf; then
-  echo -e "${ANNOUNCE} *Installing fonts.* ${RESET}"
+  echo "${ANNOUNCE} *Installing fonts.* ${RESET}"
   # Download font
   curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.tar.xz
   mkdir -p ./cascadia
@@ -88,15 +84,15 @@ if ! test -f $HOME/.local/share/fonts/CaskaydiaCoveNFNerdFontMono-Regular.ttf; t
   rm -f ./CascadiaCode.tar.xz
   nerd-font-patcher ./cascadia/CaskaydiaCoveNerdFont-Regular.ttf --progressbars --mono --use-single-width-glyphs --complete
   rm -rf ./cascadia
-  mv ./CaskaydiaCoveNFNerdFontMono-Regular.ttf $HOME/.local/share/fonts
+  mv ./CaskaydiaCoveNFNerdFontMono-Regular.ttf $HOME/.local/share/fonts/CaskaydiaCoveNFNerdFontMono-Regular.ttf
 
   # Install font
   fc-cache -vf $HOME/.local/share/fonts
 else
-  echo -e "${ANNOUNCE} *Fonts already exists. Skipping.* ${RESET}"
+  echo "${ANNOUNCE} *Fonts already exists. Skipping.* ${RESET}"
 fi
 
 # You're done! Start a new shell session for changes to take effect!
-. /etc/profile.d/nix.sh
-. $HOME/.bashrc
-echo -e "${ANNOUNCE} *Installation Complete! You free to use your new shell, however a new session, or preferably a reboot, is recommended.* ${RESET}"
+. /etc/profile.d/nix.sh  > /dev/null 2>&1
+. $HOME/.bashrc > /dev/null 2>&1
+echo "${ANNOUNCE} *Installation Complete! You free to use your new shell, however a new session, or preferably a reboot, is recommended.* ${RESET}"
