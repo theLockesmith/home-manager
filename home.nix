@@ -113,8 +113,8 @@
 
   programs.git = {
     enable = true;
-    userName = "lockesmith";
-    userEmail = "lockesmith@coldforge.xyz";
+    userName = "name_placeholder";
+    userEmail = "email_placeholder";
     aliases = {
       st = "status";
     };

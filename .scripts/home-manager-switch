@@ -66,8 +66,15 @@ else
   echo "${GREEN} *Project already exists. Skipping.* ${RESET}"
 fi
 
+echo -n "Enter your name: "
+read NAME
+echo -n "Enter your email: "
+read EMAIL
+
 sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/flake.nix
 sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/home.nix
+sed -i "s/name_placeholder/$NAME/" $HOME/.config/home-manager/home.nix
+sed -i "s/email_placeholder/$EMAIL/" $HOME/.config/home-manager/home.nix
 
 export NIX_CONFIG="experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env"
 if ! command -v home-manager; then
