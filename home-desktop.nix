@@ -1,10 +1,13 @@
+{ config, pkgs, ... }:
+
 let
     common = import ./home.nix;
 
-in // {
+in
+common // {
     home.file = {
 
-    }
+    };
 
     home.packages = [
         ## Desktop packages
@@ -16,7 +19,7 @@ in // {
         pkgs.nextcloud-client
         pkgs.vscodium
         pkgs.firefox
-    ]
+    ];
 
     home.sessionVariables = {
         # EDITOR = "emacs";

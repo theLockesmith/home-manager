@@ -72,7 +72,8 @@ else
 fi
 
 echo "${ANNOUNCE} *Build your home.* ${RESET}"
-home-manager switch -b backup -f $HOME/.config/home-manager/home-desktop.nix
+# home-manager switch -b backup -f $HOME/.config/home-manager/home-desktop.nix
+home-manager switch -b backup
 #. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
 if ! test -f $HOME/.local/share/fonts/CaskaydiaCoveNFNerdFontMono-Regular.ttf; then
