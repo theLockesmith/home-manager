@@ -1,4 +1,6 @@
 result
 home.nix
+home-desktop.nix
+home-server.nix
 flake.nix
 flake.lock
