@@ -71,6 +71,9 @@ read NAME
 echo -n "Enter your email: "
 read EMAIL
 
+cp -f $HOME/.config/home-manager/home.template.nix $HOME/.config/home-manager/home.nix
+cp -f $HOME/.config/home-manager/flake.template.nix $HOME/.config/home-manager/flake.nix
+
 sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/flake.nix
 sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/home.nix
 sed -i "s/name_placeholder/$NAME/" $HOME/.config/home-manager/home.nix
