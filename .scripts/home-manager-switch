@@ -81,7 +81,7 @@ sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/home.nix
 sed -i "s/name_placeholder/$NAME/" $HOME/.config/home-manager/home.nix
 sed -i "s/email_placeholder/$EMAIL/" $HOME/.config/home-manager/home.nix
 
-export NIX_CONFIG="experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env"
+export NIX_CONFIG="experimental-features = nix-command flakes"
 if ! command -v home-manager; then
   echo "${GREEN} *Installing Home Manager.* ${RESET}"
   nix-shell '<home-manager>' -A install
@@ -89,7 +89,7 @@ else
   echo "${GREEN} *Home Manager already exists. Skipping.* ${RESET}"
 fi
 
-echo "${GREEN} *Build your home.* ${RESET}"
+echo "${GREEN} *Building your home.* ${RESET}"
 # home-manager switch -b backup -f $HOME/.config/home-manager/home-desktop.nix
 home-manager switch -b backup
 #. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
