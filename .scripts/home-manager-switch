@@ -100,8 +100,8 @@ else
 fi
 
 echo "${GREEN} *Building your home.* ${RESET}"
-# home-manager switch -b backup -f $HOME/.config/home-manager/home-desktop.nix
-home-manager switch -b backup
+home-manager switch -b backup -f $HOME/.config/home-manager/home-desktop.nix
+#home-manager switch -b backup -f $HOME/.config/home-manager/home.nix
 #. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
 if ! test -f $HOME/.local/share/fonts/CaskaydiaCoveNFNerdFontMono-Regular.ttf; then
