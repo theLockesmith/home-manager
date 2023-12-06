@@ -118,8 +118,8 @@
 
   programs.git = {
     enable = true;
-    userName = "Chuck Coleman";
-    userEmail = "chuck.coleman@empireaccess.com";
+    userName = "name_placeholder";
+    userEmail = "email_placeholder";
     aliases = {
       st = "status";
     };
