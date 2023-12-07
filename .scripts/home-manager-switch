@@ -173,55 +173,6 @@ else
   fi
 fi
 
-## Dare to rewrite repo lookup.
-####################################################################################################################################
-: '
-# Specify the local and remote branches
-local_branch="main"
-remote_branch="origin/main"
-
-# Fetch the latest changes from the remote repository
-git fetch
-
-# Get the commit hashes of the local and remote branches
-local_commit=$(git rev-parse "$local_branch")
-remote_commit=$(git rev-parse "$remote_branch")
-
-# Compare the commit hashes to determine the relationship
-if [ "$local_commit" = "$remote_commit" ]; then
-    echo "Local branch is up-to-date with the remote."
-    echo "${GREEN} *Local branch is up-to-date. Skipping.* ${RESET}"
-elif [ "$local_commit" = "$(git merge-base "$local_branch" "$remote_branch")" ]; then
-    while true; do
-      read -p "Local branch is behind the remote. Would you like to update? (y/n):${NEWLINE}" response
-
-      case "$response" in
-        [Yy])
-          echo "${GREEN} *Updating local repository.* ${RESET}"
-          git pull origin main
-          false
-          ;;
-        [Nn])
-          echo "${GREEN} *Skipping update.* ${RESET}"
-          false
-          ;;
-        *)
-          echo "${RED} *Invalid response. Please enter 'y' or 'n'.* ${RESET}"
-          ;;
-      esac
-    done
-else
-    echo "Local branch is ahead of the remote."
-fi
-'
-####################################################################################################################################
-
-
-
-
-
-
-
 # Collect name and email
 NAME=$(git config --get user.name)
 EMAIL=$(git config --get user.email)
