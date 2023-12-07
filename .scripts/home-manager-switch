@@ -15,6 +15,7 @@ GREEN="$(tput setaf 2)"
 YELLOW="$(tput setaf 3)"
 RESET="$(tput sgr0)"  # Reset color to default
 
+: '
 # Parse short options
 while getopts 'ds' OPT; do
   case "$OPT" in
@@ -34,33 +35,41 @@ while getopts 'ds' OPT; do
 done
 
 shift $((OPTIND-1))
+'
+
+usage() {
+  echo "${YELLOW}Usage: $0 [--desktop] [--server] [--daemon] [--no-daemon] [--no-backup]${RESET}" >&2
+  exit 1
+}
 
 # Parse long options
 while [ "$#" -gt 0 ]; do
   case $1 in
-    --desktop)
+    '--desktop')
       OPTION_D=true
       SYSTEM="desktop"
       ;;
-    --server)
+    '--server')
       OPTION_S=true
       SYSTEM="server"
       ;;
-    --daemon)
+    '--daemon')
       DAEMON_FLAG=true
       DAEMON=true
       ;;
-    --no-daemon)
+    '--no-daemon')
       NO_DAEMON_FLAG=true
       DAEMON=false
       ;;
-    --no-backup)
+    '--no-backup')
       BACKUP=false
+      ;;
+    '--help')
+      usage
       ;;
     *)
       echo "${RED}Unknown option: $1${RESET}" >&2
-      echo "Usage: $0 [-d | --desktop] [-s | --server] [--daemon] [--no-daemon] [--no-backup]" >&2
-      exit 1
+      usage
       ;;
   esac
   shift
@@ -87,8 +96,10 @@ if ! command -v nix; then
   echo "${GREEN} *Nix not detected. Installing now.* ${RESET}"
   # Install Nix if not already installed
   if $DAEMON; then
+    echo "${GREEN}Starting Nix system-level install.${RESET}"
     curl -L https://nixos.org/nix/install | sh -s -- --daemon --yes
   else
+    echo "${GREEN}Starting Nix user-level install.${RESET}"
     curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes
   fi
   sleep 2
@@ -107,7 +118,7 @@ nix-channel --update
 
 # If $BACKUP set to true, backup dotfiles in home directory
 if $BACKUP; then
-  echo "${GREEN} *Backing up bashrc and profile.* ${RESET}"
+  echo "${GREEN} *Backing up dotfiles.* ${RESET}"
   if test -f $HOME/.bashrc; then
     mv -f $HOME/.bashrc $HOME/.bashrc.bak > /dev/null 2>&1
   fi
@@ -135,6 +146,8 @@ if $BACKUP; then
   if test -f $HOME/.vimrc; then
     mv -f $HOME/.vimrc $HOME/.vimrc.bak > /dev/null 2>&1
   fi
+else
+  echo "${GREEN} *Skipping backup of dotfiles.* ${RESET}"
 fi
 
 if [ ! -d "$HOME/.config/home-manager" ]; then
