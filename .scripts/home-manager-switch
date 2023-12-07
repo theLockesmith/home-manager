@@ -15,28 +15,6 @@ GREEN="$(tput setaf 2)"
 YELLOW="$(tput setaf 3)"
 RESET="$(tput sgr0)"  # Reset color to default
 
-: '
-# Parse short options
-while getopts 'ds' OPT; do
-  case "$OPT" in
-    d)
-      OPTION_D=true
-      SYSTEM="desktop"
-      ;;
-    s)
-      OPTION_S=true
-      SYSTEM="server"
-      ;;
-    \?)
-      echo "Usage: $0 [-d | --desktop] [-s | --server] [--daemon] [--no-daemon] [--no-backup]" >&2
-      exit 1
-      ;;
-  esac
-done
-
-shift $((OPTIND-1))
-'
-
 usage() {
   echo "${YELLOW} *Usage: $0 [--desktop] [--server] [--daemon] [--no-daemon] [--no-backup]* ${RESET}" >&2
   exit 1
@@ -188,6 +166,7 @@ fi
 
 sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/flake.nix
 sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/home.nix
+sed -i "s/home_placeholder/$HOME/" $HOME/.config/home-manager/home.nix
 sed -i "s/name_placeholder/$NAME/" $HOME/.config/home-manager/home.nix
 sed -i "s/email_placeholder/$EMAIL/" $HOME/.config/home-manager/home.nix
 
