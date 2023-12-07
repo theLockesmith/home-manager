@@ -27,12 +27,7 @@ while getopts 'ds' OPT; do
       SYSTEM="server"
       ;;
     \?)
-      echo "Usage: $0 [-d] [-s] [--desktop] [--server]" >&2
-      exit 1
-      ;;
-    *)
-      echo "${RED}Unknown option: $1${RESET}" >&2
-      echo "Usage: $0 [-d] [-s] [--desktop] [--server]" >&2
+      echo "Usage: $0 [-d | --desktop] [-s | --server] [--daemon] [--no-daemon] [--no-backup]" >&2
       exit 1
       ;;
   esac
@@ -64,7 +59,7 @@ while [ "$#" -gt 0 ]; do
       ;;
     *)
       echo "${RED}Unknown option: $1${RESET}" >&2
-      echo "Usage: $0 [-d] [-s] [--desktop] [--server]" >&2
+      echo "Usage: $0 [-d | --desktop] [-s | --server] [--daemon] [--no-daemon] [--no-backup]" >&2
       exit 1
       ;;
   esac

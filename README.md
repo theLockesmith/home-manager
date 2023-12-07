@@ -70,14 +70,27 @@ home-manager switch
 
 # Automated Installer
 This install script will automate the entire process. It uses default locations and backs up your current .bashrc and .profile.
+
+## Installer options:
+```zsh
+-d, --desktop           Run the installer for a desktop environment (default)
+-s, --server            Run the installer for a server environment
+
+--daemon                Passes --daemon to NixOS installer (default)
+--no-daemon             Passes --no-daemon to NixOS installer
+
+--no-backup             Installer backs up dotfiles in your home directory by default. Use this flag to disable backups of dotfiles.
+```
+
+## Run the installer
 ### For a desktop environment
 ```zsh
-. <(curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/.scripts/home-manager-switch) -d
+. <(curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/.scripts/home-manager-switch) --desktop
 ```
 
 ### For a server environment
 ```zsh
-. <(curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/.scripts/home-manager-switch) -s
+. <(curl -L https://raw.githubusercontent.com/theLockesmith/home-manager/main/.scripts/home-manager-switch) --server
 ```
 
 # Known Issues
