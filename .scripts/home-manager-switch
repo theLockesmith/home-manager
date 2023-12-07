@@ -3,6 +3,11 @@
 # Set default system as server as it will cause less problems if the assumption is incorrect.
 SYSTEM="server"
 BACKUP=false
+OPTION_D=false
+OPTION_S=false
+DAEMON_FLAG=false
+NO_DAEMON_FLAG=false
+DAEMON=true
 
 # Define color codes
 RED="$(tput setaf 1)"
@@ -36,7 +41,7 @@ done
 shift $((OPTIND-1))
 
 # Parse long options
-while [[ "$#" -gt 0 ]]; do
+while [ "$#" -gt 0 ]; do
   case $1 in
     --desktop)
       OPTION_D=true
@@ -87,9 +92,9 @@ if ! command -v nix; then
   echo "${GREEN} *Nix not detected. Installing now.* ${RESET}"
   # Install Nix if not already installed
   if $DAEMON; then
-    sh <(curl -L https://nixos.org/nix/install) --daemon --yes
+    curl -L https://nixos.org/nix/install | sh -s -- --daemon --yes
   else
-    csh <(curl -L https://nixos.org/nix/install) --no-daemon --yes
+    curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes
   fi
   sleep 2
 
