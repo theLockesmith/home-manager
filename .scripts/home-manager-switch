@@ -38,7 +38,7 @@ shift $((OPTIND-1))
 '
 
 usage() {
-  echo "${YELLOW}Usage: $0 [--desktop] [--server] [--daemon] [--no-daemon] [--no-backup]${RESET}" >&2
+  echo "${YELLOW} *Usage: $0 [--desktop] [--server] [--daemon] [--no-daemon] [--no-backup]* ${RESET}" >&2
   exit 1
 }
 
@@ -68,7 +68,7 @@ while [ "$#" -gt 0 ]; do
       usage
       ;;
     *)
-      echo "${RED}Unknown option: $1${RESET}" >&2
+      echo "$ *{RED}Unknown option: $1${RESET}* " >&2
       usage
       ;;
   esac
@@ -76,12 +76,12 @@ while [ "$#" -gt 0 ]; do
 done
 
 if $OPTION_D && $OPTION_S; then
-  echo "${RED}Options -d (--desktop) and -s (--server) cannot be used together. Please select one or the other.${RESET}"
+  echo "${RED} *Options --desktop and --server cannot be used together. Please select one or the other.* ${RESET}"
   exit 1
 fi
 
 if $DAEMON_FLAG && $NO_DAEMON_FLAG; then
-  echo "${RED}Options --daemon and --no-daemon cannot be used together. Please select one or the other.${RESET}"
+  echo "${RED} *Options --daemon and --no-daemon cannot be used together. Please select one or the other.* ${RESET}"
   exit 1
 fi
 
@@ -96,10 +96,10 @@ if ! command -v nix; then
   echo "${GREEN} *Nix not detected. Installing now.* ${RESET}"
   # Install Nix if not already installed
   if $DAEMON; then
-    echo "${GREEN}Starting Nix system-level install.${RESET}"
+    echo "${GREEN} *Starting Nix system-level install.* ${RESET}"
     curl -L https://nixos.org/nix/install | sh -s -- --daemon --yes
   else
-    echo "${GREEN}Starting Nix user-level install.${RESET}"
+    echo "${GREEN} *Starting Nix user-level install.* ${RESET}"
     curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes
   fi
   sleep 2
@@ -174,10 +174,10 @@ fi
 
 # Build nix files from templates
 if [ $SYSTEM = "desktop" ]; then
-  echo "${GREEN}Building home for desktop.${RESET}"
+  echo "${GREEN} *Building home for desktop.* ${RESET}"
   \cp -f $HOME/.config/home-manager/templates/flake.desktop.template.nix $HOME/.config/home-manager/flake.nix
 elif [ $SYSTEM = "server" ]; then
-  echo "${GREEN}Building home for server.${RESET}"
+  echo "${GREEN} *Building home for server.* ${RESET}"
   \cp -f $HOME/.config/home-manager/templates/flake.server.template.nix $HOME/.config/home-manager/flake.nix
 else
   \cp -f $HOME/.config/home-manager/templates/flake.server.template.nix $HOME/.config/home-manager/flake.nix
