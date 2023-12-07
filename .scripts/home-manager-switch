@@ -2,6 +2,7 @@
 
 # Set default system as server as it will cause less problems if the assumption is incorrect.
 SYSTEM="server"
+BACKUP=false
 
 # Define color codes
 RED="$(tput setaf 1)"
@@ -9,18 +10,71 @@ GREEN="$(tput setaf 2)"
 YELLOW="$(tput setaf 3)"
 RESET="$(tput sgr0)"  # Reset color to default
 
+# Parse short options
 while getopts 'ds' OPT; do
   case "$OPT" in
     d)
-      echo "${GREEN}Building home for desktop.${RESET}"
+      OPTION_D=true
       SYSTEM="desktop"
       ;;
     s)
-      echo "${GREEN}Building home for server.${RESET}"
+      OPTION_S=true
       SYSTEM="server"
+      ;;
+    \?)
+      echo "Usage: $0 [-d] [-s] [--desktop] [--server]" >&2
+      exit 1
+      ;;
+    *)
+      echo "${RED}Unknown option: $1${RESET}" >&2
+      echo "Usage: $0 [-d] [-s] [--desktop] [--server]" >&2
+      exit 1
       ;;
   esac
 done
+
+shift $((OPTIND-1))
+
+# Parse long options
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    --desktop)
+      OPTION_D=true
+      SYSTEM="desktop"
+      ;;
+    --server)
+      OPTION_S=true
+      SYSTEM="server"
+      ;;
+    --daemon)
+      DAEMON_FLAG=true
+      DAEMON=true
+      ;;
+    --no-daemon)
+      NO_DAEMON_FLAG=true
+      DAEMON=false
+      ;;
+    --no-backup)
+      BACKUP=false
+      ;;
+    *)
+      echo "${RED}Unknown option: $1${RESET}" >&2
+      echo "Usage: $0 [-d] [-s] [--desktop] [--server]" >&2
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+if $OPTION_D && $OPTION_S; then
+  echo "${RED}Options -d (--desktop) and -s (--server) cannot be used together. Please select one or the other.${RESET}"
+  exit 1
+fi
+
+if $DAEMON_FLAG && $NO_DAEMON_FLAG; then
+  echo "${RED}Options --daemon and --no-daemon cannot be used together. Please select one or the other.${RESET}"
+  exit 1
+fi
 
 NEWLINE=$'\n'
 
@@ -32,7 +86,11 @@ mkdir -p $HOME/.local/share/fonts/ > /dev/null 2>&1
 if ! command -v nix; then
   echo "${GREEN} *Nix not detected. Installing now.* ${RESET}"
   # Install Nix if not already installed
-  curl -L https://nixos.org/nix/install | sh -s -- --daemon --yes
+  if $DAEMON; then
+    sh <(curl -L https://nixos.org/nix/install) --daemon --yes
+  else
+    csh <(curl -L https://nixos.org/nix/install) --no-daemon --yes
+  fi
   sleep 2
 
   echo "${GREEN} *Sourcing nix.sh.* ${RESET}"
@@ -47,33 +105,36 @@ echo "${GREEN} *Adding Home Manager Nix channel.* ${RESET}"
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 
-echo "${GREEN} *Backing up bashrc and profile.* ${RESET}"
-if test -f $HOME/.bashrc; then
-  mv -f $HOME/.bashrc $HOME/.bashrc.bak > /dev/null 2>&1
-fi
+# If $BACKUP set to true, backup dotfiles in home directory
+if $BACKUP; then
+  echo "${GREEN} *Backing up bashrc and profile.* ${RESET}"
+  if test -f $HOME/.bashrc; then
+    mv -f $HOME/.bashrc $HOME/.bashrc.bak > /dev/null 2>&1
+  fi
 
-if test -f $HOME/.profile; then
-  mv -f $HOME/.profile $HOME/.profile.bak > /dev/null 2>&1
-fi
+  if test -f $HOME/.profile; then
+    mv -f $HOME/.profile $HOME/.profile.bak > /dev/null 2>&1
+  fi
 
-if test -f $HOME/.scripts; then
-  mv -f $HOME/.scripts $HOME/.scripts.bak > /dev/null 2>&1
-fi
+  if test -f $HOME/.scripts; then
+    mv -f $HOME/.scripts $HOME/.scripts.bak > /dev/null 2>&1
+  fi
 
-if test -f $HOME/.scripts; then
-  mv -f $HOME/.zshrc $HOME/.zshrc.bak > /dev/null 2>&1
-fi
+  if test -f $HOME/.scripts; then
+    mv -f $HOME/.zshrc $HOME/.zshrc.bak > /dev/null 2>&1
+  fi
 
-if test -f $HOME/.bash_profile; then
-  mv -f $HOME/.bash_profile $HOME/.bash_profile.bak > /dev/null 2>&1
-fi
+  if test -f $HOME/.bash_profile; then
+    mv -f $HOME/.bash_profile $HOME/.bash_profile.bak > /dev/null 2>&1
+  fi
 
-if test -f $HOME/.config/neofetch; then
-  mv -f $HOME/.config/neofetch $HOME/.config/neofetch.bak > /dev/null 2>&1
-fi
+  if test -f $HOME/.config/neofetch; then
+    mv -f $HOME/.config/neofetch $HOME/.config/neofetch.bak > /dev/null 2>&1
+  fi
 
-if test -f $HOME/.vimrc; then
-  mv -f $HOME/.vimrc $HOME/.vimrc.bak > /dev/null 2>&1
+  if test -f $HOME/.vimrc; then
+    mv -f $HOME/.vimrc $HOME/.vimrc.bak > /dev/null 2>&1
+  fi
 fi
 
 if [ ! -d "$HOME/.config/home-manager" ]; then
@@ -84,6 +145,7 @@ else
   echo "${GREEN} *Project already exists. Skipping.* ${RESET}"
 fi
 
+# Collect name and email
 NAME=$(git config --get user.name)
 EMAIL=$(git config --get user.email)
 
@@ -97,9 +159,12 @@ if test -z "$EMAIL"; then
   read EMAIL
 fi
 
+# Build nix files from templates
 if [ $SYSTEM = "desktop" ]; then
+  echo "${GREEN}Building home for desktop.${RESET}"
   \cp -f $HOME/.config/home-manager/templates/flake.desktop.template.nix $HOME/.config/home-manager/flake.nix
 elif [ $SYSTEM = "server" ]; then
+  echo "${GREEN}Building home for server.${RESET}"
   \cp -f $HOME/.config/home-manager/templates/flake.server.template.nix $HOME/.config/home-manager/flake.nix
 else
   \cp -f $HOME/.config/home-manager/templates/flake.server.template.nix $HOME/.config/home-manager/flake.nix
@@ -113,6 +178,7 @@ sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/home.nix
 sed -i "s/name_placeholder/$NAME/" $HOME/.config/home-manager/home.nix
 sed -i "s/email_placeholder/$EMAIL/" $HOME/.config/home-manager/home.nix
 
+# Set experimental nix features and install home manager
 export NIX_CONFIG="experimental-features = nix-command flakes"
 if ! command -v home-manager; then
   echo "${GREEN} *Installing Home Manager.* ${RESET}"
@@ -121,14 +187,14 @@ else
   echo "${GREEN} *Home Manager already exists. Skipping.* ${RESET}"
 fi
 
+# Build your home
 echo "${GREEN} *Building your home.* ${RESET}"
-#home-manager switch -b backup -f $HOME/.config/home-manager/home-desktop.nix
 home-manager switch -b backup
-#. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
+# Install Cascadia Code font and powerline symbols
 if ! test -f $HOME/.local/share/fonts/CaskaydiaCoveNFNerdFontMono-Regular.ttf; then
   echo "${GREEN} *Installing fonts.* ${RESET}"
-  # Download font
+  # Download
   curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.tar.xz
   mkdir -p ./cascadia
   tar -xvf CascadiaCode.tar.xz -C ./cascadia
@@ -137,7 +203,7 @@ if ! test -f $HOME/.local/share/fonts/CaskaydiaCoveNFNerdFontMono-Regular.ttf; t
   rm -rf ./cascadia
   mv ./CaskaydiaCoveNFNerdFontMono-Regular.ttf $HOME/.local/share/fonts/CaskaydiaCoveNFNerdFontMono-Regular.ttf
 
-  # Install font
+  # Install
   fc-cache -vf $HOME/.local/share/fonts
 else
   echo "${GREEN} *Fonts already exists. Skipping.* ${RESET}"
