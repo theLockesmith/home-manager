@@ -1,6 +1,12 @@
+# Define color codes
+RED="$(tput setaf 1)"
+GREEN="$(tput setaf 2)"
+YELLOW="$(tput setaf 3)"
+RESET="$(tput sgr0)"  # Reset color to default
+
 if [ $1 ]; then
     echo "use flake" > .envrc && direnv allow && nix-shell -p niv --run "niv init --nixpkgs nixos/nixpkgs --nixpkgs-branch $1" && nix flake init
 else
-    echo "You're missing a channel. Defaulting to `unstable`. Visit https://status.nixos.org for a list of channels."
+    echo "${YELLOW}You're missing a channel. Defaulting to \`unstable\` channel. Visit https://status.nixos.org for a list of channels.${RESET}"
     echo "use flake" > .envrc && direnv allow && nix-shell -p niv --run "niv init --nixpkgs nixos/nixpkgs --nixpkgs-branch nixos-unstable" && nix flake init
 fi
