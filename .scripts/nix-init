@@ -1,5 +1,6 @@
 if [ $1 ]; then
     echo "use flake" > .envrc && direnv allow && nix-shell -p niv --run "niv init --nixpkgs nixos/nixpkgs --nixpkgs-branch $1" && nix flake init
 else
-    echo "Nix channel required. Visit https://status.nixos.org for a list of channels."
+    echo "You're missing a channel. Defaulting to `unstable`. Visit https://status.nixos.org for a list of channels."
+    echo "use flake" > .envrc && direnv allow && nix-shell -p niv --run "niv init --nixpkgs nixos/nixpkgs --nixpkgs-branch nixos-unstable" && nix flake init
 fi

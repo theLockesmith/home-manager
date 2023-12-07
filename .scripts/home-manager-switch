@@ -1,10 +1,26 @@
 #! /bin/sh
 
+# Set default system as server as it will cause less problems if the assumption is incorrect.
+SYSTEM="server"
+
 # Define color codes
 RED="$(tput setaf 1)"
 GREEN="$(tput setaf 2)"
 YELLOW="$(tput setaf 3)"
 RESET="$(tput sgr0)"  # Reset color to default
+
+while getopts 'ds' OPT; do
+  case "$OPT" in
+    d)
+      echo "${GREEN}Building home for desktop.${RESET}"
+      SYSTEM="desktop"
+      ;;
+    s)
+      echo "${GREEN}Building home for server.${RESET}"
+      SYSTEM="server"
+      ;;
+  esac
+done
 
 NEWLINE=$'\n'
 
@@ -81,10 +97,16 @@ if test -z "$EMAIL"; then
   read EMAIL
 fi
 
-\cp -f $HOME/.config/home-manager/home.template.nix $HOME/.config/home-manager/home.nix
-\cp -f $HOME/.config/home-manager/flake.template.nix $HOME/.config/home-manager/flake.nix
-\cp -f $HOME/.config/home-manager/home-desktop.template.nix $HOME/.config/home-manager/home-desktop.nix
-\cp -f $HOME/.config/home-manager/home-server.template.nix $HOME/.config/home-manager/home-server.nix
+if [ $SYSTEM = "desktop" ]; then
+  \cp -f $HOME/.config/home-manager/templates/flake.desktop.template.nix $HOME/.config/home-manager/flake.nix
+elif [ $SYSTEM = "server" ]; then
+  \cp -f $HOME/.config/home-manager/templates/flake.server.template.nix $HOME/.config/home-manager/flake.nix
+else
+  \cp -f $HOME/.config/home-manager/templates/flake.server.template.nix $HOME/.config/home-manager/flake.nix
+fi
+\cp -f $HOME/.config/home-manager/templates/home.template.nix $HOME/.config/home-manager/home.nix
+\cp -f $HOME/.config/home-manager/templates/home-desktop.template.nix $HOME/.config/home-manager/home-desktop.nix
+\cp -f $HOME/.config/home-manager/templates/home-server.template.nix $HOME/.config/home-manager/home-server.nix
 
 sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/flake.nix
 sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/home.nix
@@ -100,8 +122,8 @@ else
 fi
 
 echo "${GREEN} *Building your home.* ${RESET}"
-home-manager switch -b backup -f $HOME/.config/home-manager/home-desktop.nix
-#home-manager switch -b backup -f $HOME/.config/home-manager/home.nix
+#home-manager switch -b backup -f $HOME/.config/home-manager/home-desktop.nix
+home-manager switch -b backup
 #. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
 if ! test -f $HOME/.local/share/fonts/CaskaydiaCoveNFNerdFontMono-Regular.ttf; then

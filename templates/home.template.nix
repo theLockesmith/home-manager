@@ -37,7 +37,7 @@
     ".vimrc".source = ./dotfiles/.vimrc;
     ".extrabashrc".source = ./dotfiles/.bashrc;
     ".zshrc".source = ./dotfiles/.zshrc;
-    #".byobu".source = ./.byobu;
+    # ".byobu".source = ./.byobu;
     ".vim".source = ./.vim;
     ".scripts".source = ./.scripts;
     ".tmux.conf".source = ./.tmux/.tmux.conf;
@@ -69,7 +69,7 @@
     pkgs.gotop
     pkgs.tmux
     pkgs.screen
-    #pkgs.byobu
+    # pkgs.byobu
     pkgs.neovim
     pkgs.neofetch
     pkgs.python3
@@ -105,7 +105,7 @@
   #  /etc/profiles/per-user/forgemaster/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "neovim";
   };
 
   # Allow Home Manager to manage bash
