@@ -9,7 +9,7 @@
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "user_placeholder";
-  home.homeDirectory = "/home/user_placeholder";
+  home.homeDirectory = "home_placeholder";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
