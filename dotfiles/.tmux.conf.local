@@ -462,3 +462,22 @@ set -ag pane-active-border bg=#FF6405
 # Split panes using | and _
 bind | split-window -h
 bind _ split-window -v
+
+
+
+
+set -u pane-active-border
+set -ug pane-active-border
+set -g pane-active-border fg=#FF6405
+set -ag pane-active-border bg=#FF6405
+
+# Split panes using | and _
+bind | split-window -h
+bind _ split-window -v
+unbind '"'
+unbind %
+
+# Reload config
+bind r source-file ~/.tmux.conf
+
+bind-key Tab select-pane -t :.+

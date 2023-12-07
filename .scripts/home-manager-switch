@@ -164,11 +164,14 @@ fi
 \cp -f $HOME/.config/home-manager/templates/home-desktop.template.nix $HOME/.config/home-manager/home-desktop.nix
 \cp -f $HOME/.config/home-manager/templates/home-server.template.nix $HOME/.config/home-manager/home-server.nix
 
-sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/flake.nix
-sed -i "s/user_placeholder/$USER/" $HOME/.config/home-manager/home.nix
-sed -i "s/home_placeholder/$HOME/" $HOME/.config/home-manager/home.nix
-sed -i "s/name_placeholder/$NAME/" $HOME/.config/home-manager/home.nix
-sed -i "s/email_placeholder/$EMAIL/" $HOME/.config/home-manager/home.nix
+sed -i "s|user_placeholder/$USER|" $HOME/.config/home-manager/flake.nix
+sed -i "s|user_placeholder/$USER|" $HOME/.config/home-manager/home.nix
+sed -i "s|home_placeholder|$HOME|" $HOME/.config/home-manager/home.nix
+sed -i "s|name_placeholder/$NAME|" $HOME/.config/home-manager/home.nix
+sed -i "s|email_placeholder/$EMAIL|" $HOME/.config/home-manager/home.nix
+
+# Testing
+head -25 $HOME/.config/home-manager/home.nix
 
 # Set experimental nix features and install home manager
 export NIX_CONFIG="experimental-features = nix-command flakes"
