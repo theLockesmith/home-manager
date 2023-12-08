@@ -17,6 +17,7 @@
         # Removing until I can find a solution to PWAs
         # pkgs.firefox
         pkgs.weechat-unwrapped
+        pkgs.remmina
     ];
 
     home.sessionVariables = {
