@@ -4,3 +4,4 @@ home-desktop.nix
 home-server.nix
 flake.nix
 flake.lock
+.profile

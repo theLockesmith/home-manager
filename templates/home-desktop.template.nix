@@ -14,7 +14,8 @@
         # Half assed fix for nextcloud: https://github.com/NixOS/nixpkgs/issues/82959#issuecomment-761541061
         # pkgs.nextcloud-client
         pkgs.vscodium
-        pkgs.firefox
+        # Removing until I can find a solution to PWAs
+        # pkgs.firefox
         pkgs.weechat-unwrapped
     ];
 

@@ -627,3 +627,6 @@ eval "$(direnv hook bash)"
 #neofetch --color_blocks off
 #fortune | cowsay-rando | lolcat
 random-bash-greeting
+
+# Load extra profile. Keep this line at the end.
+source $HOME/.localprofile

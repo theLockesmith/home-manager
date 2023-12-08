@@ -36,6 +36,11 @@
 
     ".vimrc".source = ./dotfiles/.vimrc;
     ".extrabashrc".source = ./dotfiles/.bashrc;
+    ".localprofile" = {
+      text = builtins.readFile (if builtins.pathExists ./dotfiles/.profile then ./dotfiles/.profile else ./dotfiles/blankfile);
+      #source = ./dotfiles/.profile;
+      #condition = builtins.pathExists ./dotfiles/.profile;
+    };
     ".zshrc".source = ./dotfiles/.zshrc;
     # ".byobu".source = ./.byobu;
     ".vim".source = ./.vim;
