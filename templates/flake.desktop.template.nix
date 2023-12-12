@@ -26,6 +26,7 @@
         modules = [ 
           ./home.nix
           ./home-desktop.nix
+          ./home-local.nix
           # Dropping this line until PWAsForFirefox get's squared away in Nix
           ./programs/firefox
         ];

@@ -2,7 +2,7 @@
 
 {
     home.file = {
-
+        ## Server files
     };
 
     home.packages = with pkgs; [
@@ -10,6 +10,6 @@
     ];
 
     home.sessionVariables = {
-        EDITOR = "neovim";
+        ## Sever variables
     };
 }

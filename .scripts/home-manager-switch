@@ -187,6 +187,10 @@ if test -z "$EMAIL"; then
   read EMAIL
 fi
 
+if ! test -f $HOME/.config/home-manager/templates/home-local.template.nix; then
+  touch $HOME/.config/home-manager/templates/home-local.template.nix
+fi
+
 # Build nix files from templates
 if [ $SYSTEM = "desktop" ]; then
   echo "${GREEN} *Building home for desktop.* ${RESET}"
@@ -200,6 +204,7 @@ fi
 \cp -f $HOME/.config/home-manager/templates/home.template.nix $HOME/.config/home-manager/home.nix
 \cp -f $HOME/.config/home-manager/templates/home-desktop.template.nix $HOME/.config/home-manager/home-desktop.nix
 \cp -f $HOME/.config/home-manager/templates/home-server.template.nix $HOME/.config/home-manager/home-server.nix
+\cp -f $HOME/.config/home-manager/templates/home-local.template.nix $HOME/.config/home-manager/home-local.nix
 
 sed -i "s|user_placeholder|$USER|" $HOME/.config/home-manager/flake.nix
 sed -i "s|user_placeholder|$USER|" $HOME/.config/home-manager/home.nix

@@ -38,7 +38,6 @@ in
     ];
 
     home.sessionVariables = {
-        EDITOR = "neovim";
         PULSE_SERVER = "unix:/run/user/$(id -u)/pulse/native";
         __GLX_VENDOR_LIBRARY_NAME = "nvidia"; # Use only if you have an NVIDIA GPU
     };
