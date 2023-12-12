@@ -69,6 +69,8 @@ echo "${GREEN} *Creating necessary directories.* ${RESET}"
 # Make sure required directories exist
 mkdir -p $HOME/.config/fontconfig/conf.d/ > /dev/null 2>&1
 mkdir -p $HOME/.local/share/fonts/ > /dev/null 2>&1
+mkdir -p $HOME/.config/home-manager/flake-common > /dev/null 2>&1
+mkdir -p $HOME/.config/home-manager/flake-local > /dev/null 2>&1
 
 if ! command -v nix; then
   echo "${GREEN} *Nix not detected. Installing now.* ${RESET}"
@@ -241,9 +243,11 @@ fi
 if [ $SYSTEM = "desktop" ]; then
   echo "${GREEN} *Building home for desktop.* ${RESET}"
   \cp -f $HOME/.config/home-manager/templates/flake.desktop.template.nix $HOME/.config/home-manager/flake.nix
+  \cp -f $HOME/.config/home-manager/templates/home-desktop.template.nix $HOME/.config/home-manager/flake-common/home.nix
 elif [ $SYSTEM = "server" ]; then
   echo "${GREEN} *Building home for server.* ${RESET}"
   \cp -f $HOME/.config/home-manager/templates/flake.server.template.nix $HOME/.config/home-manager/flake.nix
+  \cp -f $HOME/.config/home-manager/templates/home-server.template.nix $HOME/.config/home-manager/flake-common/home.nix
 else
   \cp -f $HOME/.config/home-manager/templates/flake.server.template.nix $HOME/.config/home-manager/flake.nix
 fi
@@ -252,9 +256,7 @@ fi
 
 # Build nix config from templates
 \cp -f $HOME/.config/home-manager/templates/home.template.nix $HOME/.config/home-manager/home.nix
-\cp -f $HOME/.config/home-manager/templates/home-desktop.template.nix $HOME/.config/home-manager/home-desktop.nix
-\cp -f $HOME/.config/home-manager/templates/home-server.template.nix $HOME/.config/home-manager/home-server.nix
-\cp -f $HOME/.config/home-manager/templates/home-local.template.nix $HOME/.config/home-manager/home-local.nix
+\cp -f $HOME/.config/home-manager/templates/home-local.template.nix $HOME/.config/home-manager/flake-local/home.nix
 
 sed -i "s|user_placeholder|$USER|" $HOME/.config/home-manager/flake.nix
 sed -i "s|user_placeholder|$USER|" $HOME/.config/home-manager/home.nix

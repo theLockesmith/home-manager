@@ -26,7 +26,7 @@
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
         modules = [ 
-          ./home-desktop.nix
+          ./home.nix
         ] ++ secondary-flake.homeManagerModules ++ common-flake.homeManagerModules;
       };
     };
