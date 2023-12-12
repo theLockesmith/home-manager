@@ -2,7 +2,7 @@
 
 # Set default system as server as it will cause less problems if the assumption is incorrect.
 SYSTEM="server"
-BACKUP=false
+BACKUP=true
 OPTION_D=false
 OPTION_S=false
 DAEMON_FLAG=false
@@ -130,7 +130,7 @@ else
   echo "${GREEN} *Skipping backup of dotfiles.* ${RESET}"
 fi
 
-if [ ! -d "$HOME/.config/home-manager" ]; then
+if [ ! -d "$HOME/.config/home-manager/.git" ]; then
   echo "${GREEN} *Cloning project repository.* ${RESET}"
   # Load Home
   git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/home-manager > /dev/null 2>&1
@@ -140,6 +140,7 @@ else
   local_branch="main"
   remote_branch="origin/main"
 
+  echo "${GREEN} *Fetching latest.* ${RESET}"
   # Fetch the latest changes from the remote repository
   git fetch
 
