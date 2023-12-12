@@ -79,7 +79,7 @@ This install script will automate the entire process. It uses default locations 
 --daemon                Passes --daemon to NixOS installer (default)
 --no-daemon             Passes --no-daemon to NixOS installer
 
---no-backup             Installer backs up dotfiles in your home directory by default. Use this flag to disable backups of dotfiles.
+--no-backup             Installer backs up dotfiles in your home directory by default. Use this flag to disable backups of dotfiles. *It is not advised to use this flag the first time you run this.
 ```
 
 ## Run the installer
