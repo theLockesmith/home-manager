@@ -220,7 +220,7 @@ if ! test -f $HOME/.config/home-manager/templates/flake.local.template.nix; then
         pkgs = nixpkgs.legacyPackages.\${system};
     in {
         homeManagerModules = [
-          (import ./home.nix {inherit pkgs;})
+          ./home.nix
         ];
     };
 }
