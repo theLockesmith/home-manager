@@ -130,10 +130,19 @@ else
   echo "${GREEN} *Skipping backup of dotfiles.* ${RESET}"
 fi
 
+# Checking for .git because home-manager gets created when home manager is installed.
+REPO="https://github.com/theLockesmith/home-manager.git"
 if [ ! -d "$HOME/.config/home-manager/.git" ]; then
-  echo "${GREEN} *Cloning project repository.* ${RESET}"
+  echo "${GREEN} *Pulling project repository.* ${RESET}"
+
+  cd $HOME/.config/home-manager
+  git init
+  git remote add origin $REPO
+  git fetch --all
+  git checkout main
+  git pull origin main
   # Load Home
-  git clone --recurse-submodules https://github.com/theLockesmith/home-manager.git $HOME/.config/home-manager > /dev/null 2>&1
+  git clone --recurse-submodules $REPO $HOME/.config/home-manager > /dev/null 2>&1
 else
   #echo "${GREEN} *Project already exists. Skipping.* ${RESET}"
   # Specify the local and remote branches
@@ -177,6 +186,8 @@ else
 fi
 
 # Collect name and email
+echo "${GREEN} *Collecting name and email for git config.* ${RESET}"
+echo "${GREEN} *You can leave these blank if you'd like.* ${RESET}"
 NAME=$(git config --get user.name)
 EMAIL=$(git config --get user.email)
 
