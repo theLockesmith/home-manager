@@ -8,9 +8,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    secondary-flake.url = "path:./flake-local";
+    common-flake.url = "path:./flake-common";
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, secondary-flake, common-flake, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -24,15 +26,8 @@
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
         modules = [ 
-          ./home.nix
           ./home-desktop.nix
-          ./home-local.nix
-          # Dropping this line until PWAsForFirefox get's squared away in Nix
-          ./programs/firefox
-        ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
+        ] ++ secondary-flake.homeManagerModules ++ common-flake.homeManagerModules;
       };
     };
 }

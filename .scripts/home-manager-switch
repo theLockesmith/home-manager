@@ -187,11 +187,57 @@ if test -z "$EMAIL"; then
   read EMAIL
 fi
 
-if ! test -f $HOME/.config/home-manager/templates/home-local.template.nix; then
-  touch $HOME/.config/home-manager/templates/home-local.template.nix
+if ! test -f $HOME/.config/home-manager/templates/flake.local.template.nix; then
+  cat > $HOME/.config/home-manager/templates/flake.local.template.nix << EOF
+{
+  description = "Secondary Home Manager modules";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      homeManagerModules = {
+
+      };
+    };
+}
+
+EOF
 fi
 
-# Build nix files from templates
+if ! test -f $HOME/.config/home-manager/templates/home-local.template.nix; then
+  cat > $HOME/.config/home-manager/templates/home-local.template.nix << EOF
+## Not all homes are created equal.
+## Template for local Home Manager config that won't get passed around.
+
+{ config, pkgs, ... }:
+
+{
+    home.file = {
+        ## Local files
+    };
+
+    home.packages = with pkgs; [
+        ## Local packages
+    ];
+
+    home.sessionVariables = {
+        ## Local variables
+    };
+}
+EOF
+fi
+
+# Build nix flakes from templates
 if [ $SYSTEM = "desktop" ]; then
   echo "${GREEN} *Building home for desktop.* ${RESET}"
   \cp -f $HOME/.config/home-manager/templates/flake.desktop.template.nix $HOME/.config/home-manager/flake.nix
@@ -201,6 +247,10 @@ elif [ $SYSTEM = "server" ]; then
 else
   \cp -f $HOME/.config/home-manager/templates/flake.server.template.nix $HOME/.config/home-manager/flake.nix
 fi
+\cp -f $HOME/.config/home-manager/templates/flake.common.template.nix $HOME/.config/home-manager/flake-common/flake.nix
+\cp -f $HOME/.config/home-manager/templates/flake.local.template.nix $HOME/.config/home-manager/flake-local/flake.nix
+
+# Build nix config from templates
 \cp -f $HOME/.config/home-manager/templates/home.template.nix $HOME/.config/home-manager/home.nix
 \cp -f $HOME/.config/home-manager/templates/home-desktop.template.nix $HOME/.config/home-manager/home-desktop.nix
 \cp -f $HOME/.config/home-manager/templates/home-server.template.nix $HOME/.config/home-manager/home-server.nix
