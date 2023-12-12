@@ -212,19 +212,22 @@ else
 fi
 
 # Collect name and email
-echo "${GREEN} *Collecting name and email for git config.* ${RESET}"
-echo "${GREEN} *You can leave these blank if you'd like.* ${RESET}"
 NAME=$(git config --get user.name)
 EMAIL=$(git config --get user.email)
 
-if test -z "$NAME"; then
-  echo -n "Enter your name:${NEWLINE}"
-  read NAME
-fi
+if test -z $NAME  || test -z $EMAIL; then
+  echo "${GREEN} *Collecting name and email for git config.* ${RESET}"
+  echo "${GREEN} *You can leave these blank if you'd like.* ${RESET}"
 
-if test -z "$EMAIL"; then
-  echo -n "Enter your email:${NEWLINE}"
-  read EMAIL
+  if test -z "$NAME"; then
+    echo -n "Enter your name:${NEWLINE}"
+    read NAME
+  fi
+
+  if test -z "$EMAIL"; then
+    echo -n "Enter your email:${NEWLINE}"
+    read EMAIL
+  fi
 fi
 
 if ! test -f $HOME/.config/home-manager/templates/flake.local.template.nix; then
