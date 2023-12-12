@@ -143,6 +143,7 @@ if [ ! -d "$HOME/.config/home-manager/.git" ]; then
   git fetch --all
   git checkout main
   git pull origin main --recurse-submodules
+  git submodule update --init --recursive
   cd $cur_dir
 else
   #echo "${GREEN} *Project already exists. Skipping.* ${RESET}"
