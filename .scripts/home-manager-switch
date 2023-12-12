@@ -135,14 +135,15 @@ REPO="https://github.com/theLockesmith/home-manager.git"
 if [ ! -d "$HOME/.config/home-manager/.git" ]; then
   echo "${GREEN} *Pulling project repository.* ${RESET}"
 
+  # Load home
+  cur_dir=$(pwd)
   cd $HOME/.config/home-manager
   git init
   git remote add origin $REPO
   git fetch --all
   git checkout main
   git pull origin main
-  # Load Home
-  git clone --recurse-submodules $REPO $HOME/.config/home-manager > /dev/null 2>&1
+  cd $cur_dir
 else
   #echo "${GREEN} *Project already exists. Skipping.* ${RESET}"
   # Specify the local and remote branches
@@ -159,7 +160,6 @@ else
 
   # Compare the commit hashes to determine the relationship
   if [ "$local_commit" = "$remote_commit" ]; then
-    echo "Local branch is up-to-date with the remote."
     echo "${GREEN} *Local branch is up-to-date. Skipping.* ${RESET}"
   elif [ "$local_commit" = "$(git merge-base "$local_branch" "$remote_branch")" ]; then
       while true; do
@@ -167,8 +167,11 @@ else
 
       case "$response" in
         [Yy])
+          cur_dir=$(pwd)
+          cd $HOME/.config/home-manager
           echo "${GREEN} *Updating local repository.* ${RESET}"
           git pull origin main
+          cd $cur_dir
           break
           ;;
         [Nn])
