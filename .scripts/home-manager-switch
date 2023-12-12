@@ -148,6 +148,7 @@ else
   #echo "${GREEN} *Project already exists. Skipping.* ${RESET}"
   # Specify the local and remote branches
   cur_dir=$(pwd)
+  cd $HOME/.config/home-manager
   local_branch="main"
   remote_branch="origin/main"
 
@@ -156,8 +157,8 @@ else
   git fetch
 
   # Get the commit hashes of the local and remote branches
-  local_commit=$(git rev-parse ${local_branch})
-  remote_commit=$(git rev-parse ${remote_branch})
+  local_commit=$(git rev-parse $local_branch)
+  remote_commit=$(git rev-parse $remote_branch)
 
   # Compare the commit hashes to determine the relationship
   echo $local_commit
