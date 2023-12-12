@@ -160,6 +160,8 @@ else
   remote_commit=$(git rev-parse ${remote_branch})
 
   # Compare the commit hashes to determine the relationship
+  echo $local_commit
+  echo $remote_commit
   if [ $local_commit = $remote_commit ]; then
     echo "${GREEN} *Local branch is up-to-date. Skipping.* ${RESET}"
   elif [ "$local_commit" = "$(git merge-base "$local_branch" "$remote_branch")" ]; then
