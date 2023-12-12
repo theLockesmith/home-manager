@@ -4,6 +4,7 @@ home-desktop.nix
 home-server.nix
 home-local.nix
 home-local.template.nix
+flake.local.template.nix
 flake-local/*
 flake.nix
 flake.lock
