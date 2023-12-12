@@ -156,8 +156,8 @@ else
   git fetch
 
   # Get the commit hashes of the local and remote branches
-  local_commit=$(git rev-parse "$local_branch")
-  remote_commit=$(git rev-parse "$remote_branch")
+  local_commit=$(git rev-parse ${local_branch})
+  remote_commit=$(git rev-parse ${remote_branch})
 
   # Compare the commit hashes to determine the relationship
   if [ "$local_commit" = "$remote_commit" ]; then
