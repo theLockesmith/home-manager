@@ -142,7 +142,7 @@ if [ ! -d "$HOME/.config/home-manager/.git" ]; then
   git remote add origin $REPO
   git fetch --all
   git checkout main
-  git pull origin main
+  git pull origin main --recurse-submodules
   cd $cur_dir
 else
   #echo "${GREEN} *Project already exists. Skipping.* ${RESET}"
@@ -170,7 +170,7 @@ else
         [Yy])
           cd $HOME/.config/home-manager
           echo "${GREEN} *Updating local repository.* ${RESET}"
-          git pull origin main
+          git pull origin main --recurse-submodules
           break
           ;;
         [Nn])
