@@ -140,16 +140,16 @@ if $BACKUP; then
   fi
 else
   echo "${GREEN} *Skipping backup of dotfiles. They will be removed instead.* ${RESET}"
-  \rm -f $HOME/.bashrc > /dev/null 2>&1
-  \rm -f $HOME/.profile > /dev/null 2>&1
-  \rm -f $HOME/.scripts > /dev/null 2>&1
-  \rm -f $HOME/.zshrc > /dev/null 2>&1
-  \rm -f $HOME/.bash_profile > /dev/null 2>&1
-  \rm -f $HOME/.config/neofetch > /dev/null 2>&1
-  \rm -f $HOME/.vimrc > /dev/null 2>&1
-  \rm -f $HOME/.vim > /dev/null 2>&1
-  \rm -f $HOME/.zshrc > /dev/null 2>&1
-  \rm -f $HOME/.scripts > /dev/null 2>&1
+  \rm -rf $HOME/.bashrc > /dev/null 2>&1
+  \rm -rf $HOME/.profile > /dev/null 2>&1
+  \rm -rf $HOME/.scripts > /dev/null 2>&1
+  \rm -rf $HOME/.zshrc > /dev/null 2>&1
+  \rm -rf $HOME/.bash_profile > /dev/null 2>&1
+  \rm -rf $HOME/.config/neofetch > /dev/null 2>&1
+  \rm -rf $HOME/.vimrc > /dev/null 2>&1
+  \rm -rf $HOME/.vim > /dev/null 2>&1
+  \rm -rf $HOME/.zshrc > /dev/null 2>&1
+  \rm -rf $HOME/.scripts > /dev/null 2>&1
 fi
 
 # Checking for .git because home-manager gets created when home manager is installed.
