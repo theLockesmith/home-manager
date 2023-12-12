@@ -31,7 +31,6 @@ in
         remmina
         spotify
         flameshot
-        btop
         # Dropping this line until PWAsForFirefox get's squared away in Nix
         # PWAsForFirefox
         # firefox-unwrapped
@@ -57,11 +56,11 @@ in
         #./themes
     ];
     
-    # Konsole configuration
-    programs.konsole = {
-        enable = true;
+    # Alacritty configuration
+    programs.alacritty = {
+        enable = false;
         settings = {
-            # Your Konsole configuration goes here
+            # Your Alacritty configuration goes here
         };
     };
 

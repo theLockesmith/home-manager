@@ -70,6 +70,8 @@
 
     htop
     gotop
+    btop
+    gtop
     tmux
     screen
     # byobu
