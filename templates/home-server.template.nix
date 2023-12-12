@@ -5,7 +5,7 @@
 
     };
 
-    home.packages = [
+    home.packages = with pkgs; [
         ## Server packages
     ];
 

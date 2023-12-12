@@ -50,7 +50,7 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+  home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -68,31 +68,33 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
 
-    pkgs.htop
-    pkgs.gotop
-    pkgs.tmux
-    pkgs.screen
-    # pkgs.byobu
-    pkgs.neovim
-    pkgs.neofetch
-    pkgs.python3
-    pkgs.python311Packages.virtualenvwrapper
-    pkgs.ruby
-    pkgs.cmatrix
-    pkgs.nettools
-    pkgs.fnm
-    pkgs.neo-cowsay
-    pkgs.fortune
-    pkgs.lolcat
-    pkgs.powerline
-    pkgs.entr
-    pkgs.fontconfig
-    pkgs.nerd-font-patcher
-    pkgs.argparse
-    pkgs.python311Packages.fontforge
-    pkgs.fontforge
-    pkgs.glibcLocales
-    pkgs.pciutils
+    htop
+    gotop
+    tmux
+    screen
+    # byobu
+    neovim
+    neofetch
+    python3
+    python311Packages.virtualenvwrapper
+    ruby
+    cmatrix
+    nettools
+    fnm
+    neo-cowsay
+    fortune
+    lolcat
+    powerline
+    entr
+    fontconfig
+    nerd-font-patcher
+    argparse
+    python311Packages.fontforge
+    fontforge
+    glibcLocales
+    pciutils
+    duf
+    jq
 
   ];
 
@@ -126,6 +128,10 @@
     aliases = {
       st = "status";
     };
+  };
+
+  programs.git.lfs = {
+    enable = true;
   };
 
   programs.direnv = {

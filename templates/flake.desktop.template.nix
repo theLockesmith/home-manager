@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration of forgemaster";
+  description = "Home Manager configuration of user_placeholder";
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
@@ -14,6 +14,9 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      overlays = [
+        
+      ];
     in {
       homeConfigurations."user_placeholder" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
@@ -23,6 +26,8 @@
         modules = [ 
           ./home.nix
           ./home-desktop.nix
+          # Dropping this line until PWAsForFirefox get's squared away in Nix
+          ./programs/firefox
         ];
 
         # Optionally use extraSpecialArgs

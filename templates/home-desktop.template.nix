@@ -1,26 +1,68 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
-{
+let
+    PWAsForFirefox = import ./packages/firefoxpwa { inherit pkgs; };
+in
+{  
+    nixpkgs = {
+        config = {
+            allowUnfree = true;
+            allowUnfreePredicate = (_: true);
+            android_sdk.accept_license = true;
+            # Build packages with pulseaudio support
+            pulseaudio = true;
+        };
+    };
+
     home.file = {
 
     };
 
-    home.packages = [
+    home.packages = with pkgs; [
         ## Desktop packages
-        pkgs.keepassxc
-        pkgs.ffmpeg-full
-        pkgs.glxinfo
-        pkgs.pavucontrol
+        keepassxc
+        ffmpeg-full
+        glxinfo
+        pavucontrol
         # Half assed fix for nextcloud: https://github.com/NixOS/nixpkgs/issues/82959#issuecomment-761541061
-        # pkgs.nextcloud-client
-        pkgs.vscodium
-        # Removing until I can find a solution to PWAs
-        # pkgs.firefox
-        pkgs.weechat-unwrapped
-        pkgs.remmina
+        # nextcloud-client
+        vscodium
+        weechat
+        remmina
+        spotify
+        flameshot
+        btop
+        # Dropping this line until PWAsForFirefox get's squared away in Nix
+        # PWAsForFirefox
+        # firefox-unwrapped
+        # firefoxpwa
     ];
 
     home.sessionVariables = {
         EDITOR = "neovim";
+        PULSE_SERVER = "unix:/run/user/$(id -u)/pulse/native";
+        __GLX_VENDOR_LIBRARY_NAME = "nvidia"; # Use only if you have an NVIDIA GPU
     };
+
+    # programs.firefox = {
+    #     enable = true;
+    #     package = pkgs.firefox-unwrapped;
+    # };
+
+    imports = lib.concatMap import [
+        #./modules
+        #./programs/firefox
+        #./scripts
+        #./services
+        #./themes
+    ];
+    
+    # Konsole configuration
+    programs.konsole = {
+        enable = true;
+        settings = {
+            # Your Konsole configuration goes here
+        };
+    };
+
 }

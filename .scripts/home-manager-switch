@@ -218,7 +218,7 @@ fi
 
 # Build your home
 echo "${GREEN} *Building your home.* ${RESET}"
-home-manager switch -b backup
+home-manager switch -b backup --impure
 
 # Install Cascadia Code font and powerline symbols
 if ! test -f $HOME/.local/share/fonts/CaskaydiaCoveNFNerdFontMono-Regular.ttf; then
