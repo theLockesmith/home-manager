@@ -15,8 +15,7 @@
         pkgs = nixpkgs.legacyPackages.${system};
     in {
         homeManagerModules = [
-            (import ./home.nix {inherit pkgs;})
-            (import ./home-local.nix {inherit pkgs;})
+            ./home.nix
         ];
     };
 }

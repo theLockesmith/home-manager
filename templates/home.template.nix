@@ -6,6 +6,16 @@
     settings.experimental-features = [ "nix-command" "flakes" "auto-allocate-uids" "impure-derivations" ];
   };
 
+  nixpkgs = {
+    config = {
+        allowUnfree = true;
+        allowUnfreePredicate = (_: true);
+        android_sdk.accept_license = true;
+        # Build packages with pulseaudio support
+        pulseaudio = true;
+    };
+};
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "user_placeholder";

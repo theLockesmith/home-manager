@@ -192,27 +192,26 @@ fi
 if ! test -f $HOME/.config/home-manager/templates/flake.local.template.nix; then
   cat > $HOME/.config/home-manager/templates/flake.local.template.nix << EOF
 {
-  description = "Secondary Home Manager modules";
+    description = "Secondary Home Manager modules";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+    inputs = {
+        nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+        home-manager = {
+          url = "github:nix-community/home-manager";
+          inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
-  };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
-    let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+    outputs = { self, nixpkgs, home-manager, ... }@inputs:
+        let
+        system = "x86_64-linux";
+        pkgs = nixpkgs.legacyPackages.${system};
     in {
-      homeManagerModules = {
-
-      };
+        homeManagerModules = [
+          (import ./home.nix {inherit pkgs;})
+        ];
     };
 }
-
 EOF
 fi
 
@@ -238,6 +237,15 @@ if ! test -f $HOME/.config/home-manager/templates/home-local.template.nix; then
 }
 EOF
 fi
+
+# delete old home.nix, flake.nix, and flake.lock files
+\rm -f $HOME/.config/home-manager/flake.lock
+\rm -f $HOME/.config/home-manager/flake.nix
+\rm -f $HOME/.config/home-manager/home.nix
+\rm -f $HOME/.config/home-manager/flake-local/flake.nix
+\rm -f $HOME/.config/home-manager/flake-local/home.nix
+\rm -f $HOME/.config/home-manager/flake-common/flake.nix
+\rm -f $HOME/.config/home-manager/flake-common/home.nix
 
 # Build nix flakes from templates
 if [ $SYSTEM = "desktop" ]; then
@@ -275,7 +283,7 @@ fi
 
 # Build your home
 echo "${GREEN} *Building your home.* ${RESET}"
-home-manager switch -b backup --impure
+home-manager switch -b backup --impure #--show-trace
 
 # Install Cascadia Code font and powerline symbols
 if ! test -f $HOME/.local/share/fonts/CaskaydiaCoveNFNerdFontMono-Regular.ttf; then
