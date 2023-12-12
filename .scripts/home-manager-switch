@@ -147,6 +147,7 @@ if [ ! -d "$HOME/.config/home-manager/.git" ]; then
 else
   #echo "${GREEN} *Project already exists. Skipping.* ${RESET}"
   # Specify the local and remote branches
+  cur_dir=$(pwd)
   local_branch="main"
   remote_branch="origin/main"
 
@@ -167,11 +168,9 @@ else
 
       case "$response" in
         [Yy])
-          cur_dir=$(pwd)
           cd $HOME/.config/home-manager
           echo "${GREEN} *Updating local repository.* ${RESET}"
           git pull origin main
-          cd $cur_dir
           break
           ;;
         [Nn])
@@ -186,6 +185,7 @@ else
   else
     echo "${GREEN} *Local branch is ahead of the remote.* ${RESET}"
   fi
+  cd $cur_dir
 fi
 
 # Collect name and email
