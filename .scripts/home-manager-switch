@@ -126,8 +126,30 @@ if $BACKUP; then
   if test -f $HOME/.vimrc; then
     mv -f $HOME/.vimrc $HOME/.vimrc.bak > /dev/null 2>&1
   fi
+
+  if test -f $HOME/.vim; then
+    mv -f $HOME/.vim $HOME/.vim.bak > /dev/null 2>&1
+  fi
+
+  if test -f $HOME/.zshrc; then
+    mv -f $HOME/.zshrc $HOME/.zshrc.bak > /dev/null 2>&1
+  fi
+
+  if test -f $HOME/.scripts; then
+    mv -f $HOME/.scripts $HOME/.scripts.bak > /dev/null 2>&1
+  fi
 else
-  echo "${GREEN} *Skipping backup of dotfiles.* ${RESET}"
+  echo "${GREEN} *Skipping backup of dotfiles. They will be removed instead.* ${RESET}"
+  \rm -f $HOME/.bashrc > /dev/null 2>&1
+  \rm -f $HOME/.profile > /dev/null 2>&1
+  \rm -f $HOME/.scripts > /dev/null 2>&1
+  \rm -f $HOME/.zshrc > /dev/null 2>&1
+  \rm -f $HOME/.bash_profile > /dev/null 2>&1
+  \rm -f $HOME/.config/neofetch > /dev/null 2>&1
+  \rm -f $HOME/.vimrc > /dev/null 2>&1
+  \rm -f $HOME/.vim > /dev/null 2>&1
+  \rm -f $HOME/.zshrc > /dev/null 2>&1
+  \rm -f $HOME/.scripts > /dev/null 2>&1
 fi
 
 # Checking for .git because home-manager gets created when home manager is installed.
