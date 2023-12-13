@@ -110,45 +110,17 @@ nix-channel --update
 # If $BACKUP set to true, backup dotfiles in home directory
 if $BACKUP; then
   echo "${GREEN} *Backing up dotfiles.* ${RESET}"
-  if test -f $HOME/.bashrc; then
-    mv -f $HOME/.bashrc $HOME/.bashrc.bak > /dev/null 2>&1
-  fi
+  tar -czvf $HOME/dotfiles-$(date +"%Y-%m-%d_%H-%M-%S").tar.gz \
+    $( [ -f $HOME/.bashrc ] && echo "$HOME/.bashrc" ) \
+    $( [ -f $HOME/.profile ] && echo "$HOME/.profile" ) \
+    $( [ -f $HOME/.scripts ] && echo "$HOME/.scripts" ) \
+    $( [ -f $HOME/.zshrc ] && echo "$HOME/.zshrc" ) \
+    $( [ -f $HOME/.bash_profile ] && echo "$HOME/.bash_profile" ) \
+    $( [ -f $HOME/.config/neofetch ] && echo "$HOME/.config/neofetch" ) \
+    $( [ -f $HOME/.vimrc ] && echo "$HOME/.vimrc" ) \
+    $( [ -f $HOME/.vim ] && echo "$HOME/.vim" ) > /dev/null 2>&1
 
-  if test -f $HOME/.profile; then
-    mv -f $HOME/.profile $HOME/.profile.bak > /dev/null 2>&1
-  fi
 
-  if test -f $HOME/.scripts; then
-    mv -f $HOME/.scripts $HOME/.scripts.bak > /dev/null 2>&1
-  fi
-
-  if test -f $HOME/.scripts; then
-    mv -f $HOME/.zshrc $HOME/.zshrc.bak > /dev/null 2>&1
-  fi
-
-  if test -f $HOME/.bash_profile; then
-    mv -f $HOME/.bash_profile $HOME/.bash_profile.bak > /dev/null 2>&1
-  fi
-
-  if test -f $HOME/.config/neofetch; then
-    mv -f $HOME/.config/neofetch $HOME/.config/neofetch.bak > /dev/null 2>&1
-  fi
-
-  if test -f $HOME/.vimrc; then
-    mv -f $HOME/.vimrc $HOME/.vimrc.bak > /dev/null 2>&1
-  fi
-
-  if test -f $HOME/.vim; then
-    mv -f $HOME/.vim $HOME/.vim.bak > /dev/null 2>&1
-  fi
-
-  if test -f $HOME/.zshrc; then
-    mv -f $HOME/.zshrc $HOME/.zshrc.bak > /dev/null 2>&1
-  fi
-
-  if test -f $HOME/.scripts; then
-    mv -f $HOME/.scripts $HOME/.scripts.bak > /dev/null 2>&1
-  fi
 else
   echo "${GREEN} *Skipping backup of dotfiles. They will be removed instead.* ${RESET}"
   \rm -rf $HOME/.bashrc > /dev/null 2>&1
