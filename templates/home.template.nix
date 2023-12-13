@@ -15,7 +15,8 @@ let
   ];
 
   # Condition for including the desktop packages
-  includeDesktopPackages = lib.hasAttrByPath ["environment" "variables" "DESKTOP_PACKAGES"] config;
+  # includeDesktopPackages = lib.hasAttrByPath ["environment" "variables" "DESKTOP_PACKAGES"] config;
+  includeDesktopPackages = builtins.getEnv "DESKTOP_PACKAGES" == "1";
 
   # Server packages
   serverPackages = with pkgs; [
@@ -23,14 +24,16 @@ let
   ];
 
   # Condition for including the desktop packages
-  includeServerPackages = lib.hasAttrByPath ["environment" "variables" "SERVER_PACKAGES"] config;
+  # includeServerPackages = lib.hasAttrByPath ["environment" "variables" "SERVER_PACKAGES"] config;
+  includeServerPackages = builtins.getEnv "SERVER_PACKAGES" == "1";
 
   # Additional packages
   additionalPackages = with pkgs; [
 
   ];
 
-  includeAdditionalPackages = includeDesktopPackages || lib.hasAttrByPath ["environment" "variables" "OPTIONAL_PACKAGES"] config;
+  # includeAdditionalPackages = includeDesktopPackages || lib.hasAttrByPath ["environment" "variables" "OPTIONAL_PACKAGES"] config;
+  includeAdditionalPackages = builtins.getEnv "OPTIONAL_PACKAGES" == "1";
 
   # Example inclusion of individual package
   # optionalPackage1 = lib.optional (lib.hasAttrByPath ["environment" "variables" "OPTIONAL_PACKAGE_1"] config) pkgs.yourPackage;
