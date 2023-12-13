@@ -16,7 +16,15 @@ YELLOW="$(tput setaf 3)"
 RESET="$(tput sgr0)"  # Reset color to default
 
 usage() {
-  echo "${YELLOW} *Usage: $0 [--desktop] [--server] [--daemon] [--no-daemon] [--no-backup]* ${RESET}" >&2
+  echo "${YELLOW} Usage:
+$0
+--desktop       Run the installer for a desktop environment (default)
+--server        Run the installer for a server environment
+--daemon        Passes --daemon to NixOS installer (default)
+--no-daemon     Passes --no-daemon to NixOS installer
+--no-backup     Installer backs up dotfiles in your home directory by default. Use this flag to disable backups of dotfiles. *It is not advised to use 
+--firefox       Installs Firefox. This is currently not done by default because of missing PWA support in nix package.
+${RESET}" >&2
   exit 1
 }
 
@@ -26,10 +34,12 @@ while [ "$#" -gt 0 ]; do
     '--desktop')
       OPTION_D=true
       SYSTEM="desktop"
+      export DESKTOP_PACKAGES=1
       ;;
     '--server')
       OPTION_S=true
       SYSTEM="server"
+      export SERVER_PACKAGES=1
       ;;
     '--daemon')
       DAEMON_FLAG=true
@@ -41,6 +51,9 @@ while [ "$#" -gt 0 ]; do
       ;;
     '--no-backup')
       BACKUP=false
+      ;;
+    '--firefox')
+      export INCLUDE_FIREFOX=1
       ;;
     '--help')
       usage
@@ -69,8 +82,6 @@ echo "${GREEN} *Creating necessary directories.* ${RESET}"
 # Make sure required directories exist
 mkdir -p $HOME/.config/fontconfig/conf.d/ > /dev/null 2>&1
 mkdir -p $HOME/.local/share/fonts/ > /dev/null 2>&1
-mkdir -p $HOME/.config/home-manager/flake-common > /dev/null 2>&1
-mkdir -p $HOME/.config/home-manager/flake-local > /dev/null 2>&1
 
 if ! command -v nix; then
   echo "${GREEN} *Nix not detected. Installing now.* ${RESET}"
@@ -168,7 +179,6 @@ if [ ! -d "$HOME/.config/home-manager/.git" ]; then
   git submodule update --init --recursive
   cd $cur_dir
 else
-  #echo "${GREEN} *Project already exists. Skipping.* ${RESET}"
   # Specify the local and remote branches
   cur_dir=$(pwd)
   cd $HOME/.config/home-manager
@@ -215,7 +225,7 @@ fi
 NAME=$(git config --get user.name)
 EMAIL=$(git config --get user.email)
 
-if test -z $NAME  || test -z $EMAIL; then
+if test -z "$NAME"  || test -z "$EMAIL"; then
   echo "${GREEN} *Collecting name and email for git config.* ${RESET}"
   echo "${GREEN} *You can leave these blank if you'd like.* ${RESET}"
 
@@ -230,82 +240,9 @@ if test -z $NAME  || test -z $EMAIL; then
   fi
 fi
 
-if ! test -f $HOME/.config/home-manager/templates/flake.local.template.nix; then
-  cat > $HOME/.config/home-manager/templates/flake.local.template.nix << EOF
-{
-    description = "Secondary Home Manager modules";
-
-    inputs = {
-        nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-        home-manager = {
-          url = "github:nix-community/home-manager";
-          inputs.nixpkgs.follows = "nixpkgs";
-        };
-    };
-
-    outputs = { self, nixpkgs, home-manager, ... }@inputs:
-        let
-        system = "x86_64-linux";
-        pkgs = nixpkgs.legacyPackages.\${system};
-    in {
-        homeManagerModules = [
-          ./home.nix
-        ];
-    };
-}
-EOF
-fi
-
-if ! test -f $HOME/.config/home-manager/templates/home-local.template.nix; then
-  cat > $HOME/.config/home-manager/templates/home-local.template.nix << EOF
-## Not all homes are created equal.
-## Template for local Home Manager config that won't get passed around.
-
-{ config, pkgs, ... }:
-
-{
-    home.file = {
-        ## Local files
-    };
-
-    home.packages = with pkgs; [
-        ## Local packages
-    ];
-
-    home.sessionVariables = {
-        ## Local variables
-    };
-}
-EOF
-fi
-
-# delete old home.nix, flake.nix, and flake.lock files
-\rm -f $HOME/.config/home-manager/flake.lock
-\rm -f $HOME/.config/home-manager/flake.nix
-\rm -f $HOME/.config/home-manager/home.nix
-\rm -f $HOME/.config/home-manager/flake-local/flake.nix
-\rm -f $HOME/.config/home-manager/flake-local/home.nix
-\rm -f $HOME/.config/home-manager/flake-common/flake.nix
-\rm -f $HOME/.config/home-manager/flake-common/home.nix
-
-# Build nix flakes from templates
-if [ $SYSTEM = "desktop" ]; then
-  echo "${GREEN} *Building home for desktop.* ${RESET}"
-  \cp -f $HOME/.config/home-manager/templates/flake.desktop.template.nix $HOME/.config/home-manager/flake.nix
-  \cp -f $HOME/.config/home-manager/templates/home-desktop.template.nix $HOME/.config/home-manager/flake-common/home.nix
-elif [ $SYSTEM = "server" ]; then
-  echo "${GREEN} *Building home for server.* ${RESET}"
-  \cp -f $HOME/.config/home-manager/templates/flake.server.template.nix $HOME/.config/home-manager/flake.nix
-  \cp -f $HOME/.config/home-manager/templates/home-server.template.nix $HOME/.config/home-manager/flake-common/home.nix
-else
-  \cp -f $HOME/.config/home-manager/templates/flake.server.template.nix $HOME/.config/home-manager/flake.nix
-fi
-\cp -f $HOME/.config/home-manager/templates/flake.common.template.nix $HOME/.config/home-manager/flake-common/flake.nix
-\cp -f $HOME/.config/home-manager/templates/flake.local.template.nix $HOME/.config/home-manager/flake-local/flake.nix
-
 # Build nix config from templates
 \cp -f $HOME/.config/home-manager/templates/home.template.nix $HOME/.config/home-manager/home.nix
-\cp -f $HOME/.config/home-manager/templates/home-local.template.nix $HOME/.config/home-manager/flake-local/home.nix
+\cp -f $HOME/.config/home-manager/templates/flake.template.nix $HOME/.config/home-manager/flake.nix
 
 sed -i "s|user_placeholder|$USER|" $HOME/.config/home-manager/flake.nix
 sed -i "s|user_placeholder|$USER|" $HOME/.config/home-manager/home.nix
@@ -315,7 +252,7 @@ sed -i "s|email_placeholder|$EMAIL|" $HOME/.config/home-manager/home.nix
 
 # Set experimental nix features and install home manager
 export NIX_CONFIG="experimental-features = nix-command flakes"
-if ! command -v home-manager; then
+if ! command -v home-manager > /dev/null 2>&1; then
   echo "${GREEN} *Installing Home Manager.* ${RESET}"
   nix-shell '<home-manager>' -A install
 else
@@ -323,8 +260,17 @@ else
 fi
 
 # Build your home
-echo "${GREEN} *Building your home.* ${RESET}"
-home-manager switch -b backup --impure #--show-trace
+
+if [ $SYSTEM = "desktop" ]; then
+  echo "${GREEN} *Building home for desktop.* ${RESET}"
+  home-manager switch -b backup --impure
+elif [ $SYSTEM = "server" ]; then
+  echo "${GREEN} *Building home for server.* ${RESET}"
+  home-manager switch -b backup --impure
+else
+  echo "${GREEN} *No flag passed for --desktop or --server.* ${RESET}"
+  echo "${GREEN} *Defaulting to build for server.* ${RESET}"
+fi
 
 # Install Cascadia Code font and powerline symbols
 if ! test -f $HOME/.local/share/fonts/CaskaydiaCoveNFNerdFontMono-Regular.ttf; then

@@ -1,5 +1,44 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+let
+  # Desktop packages
+  desktopPackages = with pkgs; [
+    keepassxc
+    ffmpeg-full
+    glxinfo
+    pavucontrol
+    vscodium
+    weechat
+    remmina
+    spotify
+    flameshot
+  ];
+
+  # Condition for including the desktop packages
+  includeDesktopPackages = lib.hasAttrByPath ["environment" "variables" "DESKTOP_PACKAGES"] config;
+
+  # Server packages
+  serverPackages = with pkgs; [
+
+  ];
+
+  # Condition for including the desktop packages
+  includeServerPackages = lib.hasAttrByPath ["environment" "variables" "SERVER_PACKAGES"] config;
+
+  # Additional packages
+  additionalPackages = with pkgs; [
+
+  ];
+
+  includeAdditionalPackages = includeDesktopPackages || lib.hasAttrByPath ["environment" "variables" "OPTIONAL_PACKAGES"] config;
+
+  # Example inclusion of individual package
+  # optionalPackage1 = lib.optional (lib.hasAttrByPath ["environment" "variables" "OPTIONAL_PACKAGE_1"] config) pkgs.yourPackage;
+  firefoxConfigPath = ./programs/firefox;
+  #includeFirefox = lib.hasAttrByPath ["environment" "variables" "USE_FIREFOX"] config;
+  includeFirefox = builtins.getEnv "INCLUDE_FIREFOX" == "1";
+
+in
 {
   nix = {
     package = pkgs.nix;
@@ -108,7 +147,11 @@
     duf
     jq
 
-  ];
+  ] ++ lib.optionals includeDesktopPackages desktopPackages
+    ++ lib.optionals includeServerPackages serverPackages
+    ++ lib.optionals includeAdditionalPackages additionalPackages;
+    # For individual optional packages, just use `++ pkgname` as shown below
+    # ++ optionalPackage1
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. If you don't want to manage your shell through Home
@@ -157,6 +200,8 @@
     defaultCacheTtl = 1800;
     enableSshSupport = true;
   };
+
+  imports = lib.optional includeFirefox firefoxConfigPath;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

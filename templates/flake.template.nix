@@ -8,17 +8,18 @@
         url = "github:nix-community/home-manager";
         inputs.nixpkgs.follows = "nixpkgs";
     };
-    secondary-flake.url = "path:./flake-local";
-    common-flake.url = "path:./flake-common";
   };
 
-  outputs = { nixpkgs, home-manager, secondary-flake, common-flake, ... }:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+
     overlays = [
       
     ];
+
   in {
     homeConfigurations."user_placeholder" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
@@ -27,7 +28,7 @@
         # the path to your home.nix.
         modules = [ 
             ./home.nix
-        ] ++ secondary-flake.homeManagerModules ++ common-flake.homeManagerModules;
+        ];
     };
   };
 }
