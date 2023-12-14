@@ -135,24 +135,23 @@ else
   \rm -rf $HOME/.scripts > /dev/null 2>&1
 fi
 
+cur_dir=$(pwd)
+cd $HOME/.config/home-manager
+
 # Checking for .git because home-manager gets created when home manager is installed.
 REPO="https://github.com/theLockesmith/home-manager.git"
 if [ ! -d "$HOME/.config/home-manager/.git" ]; then
   echo "${GREEN} *Pulling project repository.* ${RESET}"
 
   # Load home
-  cur_dir=$(pwd)
-  cd $HOME/.config/home-manager
   git init
   git remote add origin $REPO
   git fetch --all
   git checkout main
   git pull origin main --recurse-submodules
   git submodule update --init --recursive
-  cd $cur_dir
 else
   # Specify the local and remote branches
-  cur_dir=$(pwd)
   cd $HOME/.config/home-manager
   local_branch="main"
   remote_branch="origin/main"
@@ -190,7 +189,6 @@ else
   else
     echo "${GREEN} *Local branch is ahead of the remote.* ${RESET}"
   fi
-  cd $cur_dir
 fi
 
 # Collect name and email
@@ -216,11 +214,11 @@ fi
 \cp -f $HOME/.config/home-manager/templates/home.template.nix $HOME/.config/home-manager/home.nix
 \cp -f $HOME/.config/home-manager/templates/flake.template.nix $HOME/.config/home-manager/flake.nix
 
-sed -i "s|user_placeholder|$USER|" $HOME/.config/home-manager/flake.nix
-sed -i "s|user_placeholder|$USER|" $HOME/.config/home-manager/home.nix
-sed -i "s|home_placeholder|$HOME|" $HOME/.config/home-manager/home.nix
-sed -i "s|name_placeholder|$NAME|" $HOME/.config/home-manager/home.nix
-sed -i "s|email_placeholder|$EMAIL|" $HOME/.config/home-manager/home.nix
+sed -i "s|user_placeholder|$USER|" $HOME/.config/home-manager/flake.nix > /dev/null 2>&1
+sed -i "s|user_placeholder|$USER|" $HOME/.config/home-manager/home.nix > /dev/null 2>&1
+sed -i "s|home_placeholder|$HOME|" $HOME/.config/home-manager/home.nix > /dev/null 2>&1
+sed -i "s|name_placeholder|$NAME|" $HOME/.config/home-manager/home.nix > /dev/null 2>&1
+sed -i "s|email_placeholder|$EMAIL|" $HOME/.config/home-manager/home.nix > /dev/null 2>&1
 
 # Set experimental nix features and install home manager
 export NIX_CONFIG="experimental-features = nix-command flakes"
@@ -261,6 +259,8 @@ if ! test -f $HOME/.local/share/fonts/CaskaydiaCoveNFNerdFontMono-Regular.ttf; t
 else
   echo "${GREEN} *Fonts already exists. Skipping.* ${RESET}"
 fi
+
+cd $cur_dir
 
 # You're done! Start a new shell session for changes to take effect!
 . /etc/profile.d/nix.sh  > /dev/null 2>&1
