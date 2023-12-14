@@ -12,10 +12,10 @@ let
     remmina
     spotify
     flameshot
+    #plex-media-player
   ];
 
   # Condition for including the desktop packages
-  # includeDesktopPackages = lib.hasAttrByPath ["environment" "variables" "DESKTOP_PACKAGES"] config;
   includeDesktopPackages = builtins.getEnv "DESKTOP_PACKAGES" == "1";
 
   # Server packages
@@ -23,8 +23,7 @@ let
 
   ];
 
-  # Condition for including the desktop packages
-  # includeServerPackages = lib.hasAttrByPath ["environment" "variables" "SERVER_PACKAGES"] config;
+  # Condition for including the server packages
   includeServerPackages = builtins.getEnv "SERVER_PACKAGES" == "1";
 
   # Additional packages
@@ -32,13 +31,11 @@ let
 
   ];
 
-  # includeAdditionalPackages = includeDesktopPackages || lib.hasAttrByPath ["environment" "variables" "OPTIONAL_PACKAGES"] config;
+  # Environment variable to include extra optional packages
   includeAdditionalPackages = builtins.getEnv "OPTIONAL_PACKAGES" == "1";
 
-  # Example inclusion of individual package
-  # optionalPackage1 = lib.optional (lib.hasAttrByPath ["environment" "variables" "OPTIONAL_PACKAGE_1"] config) pkgs.yourPackage;
+  # Optional inclusion of Firefox based on environment variable
   firefoxConfigPath = ./programs/firefox;
-  #includeFirefox = lib.hasAttrByPath ["environment" "variables" "USE_FIREFOX"] config;
   includeFirefox = builtins.getEnv "INCLUDE_FIREFOX" == "1";
 
 in
@@ -46,6 +43,8 @@ in
   nix = {
     package = pkgs.nix;
     settings.experimental-features = [ "nix-command" "flakes" "auto-allocate-uids" "impure-derivations" ];
+    # hardware.opengl.enable = true;
+    # hardware.opengl.driSupport = true;
   };
 
   nixpkgs = {
@@ -204,6 +203,7 @@ in
     enableSshSupport = true;
   };
 
+  # Optional import for Firefox
   imports = lib.optional includeFirefox firefoxConfigPath;
 
   # Let Home Manager install and manage itself.
