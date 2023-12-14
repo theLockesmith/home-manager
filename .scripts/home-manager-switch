@@ -81,6 +81,7 @@ NEWLINE=$'\n'
 echo "${GREEN} *Creating necessary directories.* ${RESET}"
 # Make sure required directories exist
 mkdir -p $HOME/.config/fontconfig/conf.d/ > /dev/null 2>&1
+mkdir -p $HOME/.config/home-manager/ > /dev/null 2>&1
 mkdir -p $HOME/.local/share/fonts/ > /dev/null 2>&1
 
 if ! command -v nix; then
