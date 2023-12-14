@@ -12,7 +12,8 @@ let
     remmina
     spotify
     flameshot
-    #plex-media-player
+    # libGL
+    # plex-media-player
   ];
 
   # Condition for including the desktop packages
