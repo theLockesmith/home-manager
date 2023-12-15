@@ -77,6 +77,6 @@ alias plasma-kill-4="killall plasmashell; kstart plasmashell &"
 alias ss="QT_QPA_PLATFORM=xcb flameshot gui --raw | wl-copy"
 
 alias unfuck-me="sudo apt-get install --reinstall ubuntu-desktop; sudo apt-get install --reinstall kde-full"
-. "/home/forgemaster/.nix-profile/etc/profile.d/hm-session-vars.sh"
+. "$HOME.nix-profile/etc/profile.d/hm-session-vars.sh"
 #neofetch --color_blocks off
 #fortune | cowthink -f tux | lolcat
