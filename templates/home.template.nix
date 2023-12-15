@@ -164,7 +164,7 @@ in
   #
   # or
   #
-  #  /etc/profiles/per-user/forgemaster/etc/profile.d/hm-session-vars.sh
+  #  /etc/profiles/per-user/user/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
     EDITOR = "neovim";
