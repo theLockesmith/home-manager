@@ -29,7 +29,8 @@ let
 
   # Additional packages
   additionalPackages = with pkgs; [
-
+    python3
+    python311Packages.virtualenvwrapper
   ];
 
   # Environment variable to include extra optional packages
@@ -129,8 +130,6 @@ in
     # byobu
     neovim
     neofetch
-    python3
-    python311Packages.virtualenvwrapper
     ruby
     cmatrix
     nettools
