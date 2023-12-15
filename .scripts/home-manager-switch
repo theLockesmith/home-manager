@@ -3,8 +3,6 @@
 # Set default system as server as it will cause less problems if the assumption is incorrect.
 SYSTEM="server"
 BACKUP=true
-OPTION_D=false
-OPTION_S=false
 DAEMON_FLAG=false
 NO_DAEMON_FLAG=false
 DAEMON=true
@@ -35,12 +33,10 @@ ${RESET}" >&2
 while [ "$#" -gt 0 ]; do
   case $1 in
     '--desktop')
-      OPTION_D=true
       SYSTEM="desktop"
       export DESKTOP_PACKAGES=1
       ;;
     '--server')
-      OPTION_S=true
       SYSTEM="server"
       export SERVER_PACKAGES=1
       ;;
@@ -69,7 +65,7 @@ while [ "$#" -gt 0 ]; do
   shift
 done
 
-if $OPTION_D && $OPTION_S; then
+if $DESKTOP_PACKAGES = 1 && $SERVER_PACKAGES = 1; then
   echo "${RED} *Options --desktop and --server cannot be used together. Please select one or the other.* ${RESET}"
   exit 1
 fi
@@ -87,7 +83,7 @@ mkdir -p $HOME/.config/fontconfig/conf.d/ > /dev/null 2>&1
 mkdir -p $HOME/.config/home-manager/ > /dev/null 2>&1
 mkdir -p $HOME/.local/share/fonts/ > /dev/null 2>&1
 
-if ! command -v nix; then
+if ! command -v nix > /dev/null 2>&1; then
   echo "${GREEN} *Nix not detected. Installing now.* ${RESET}"
   # Install Nix if not already installed
   if $DAEMON; then
