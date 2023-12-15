@@ -8,6 +8,9 @@ OPTION_S=false
 DAEMON_FLAG=false
 NO_DAEMON_FLAG=false
 DAEMON=true
+OPTIONAL_PACKAGES=0
+DESKTOP_PACKAGES=0
+SERVER_PACKAGES=0
 
 # Define color codes
 RED="$(tput setaf 1)"
