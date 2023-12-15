@@ -127,13 +127,9 @@ in
     gtop
     tmux
     screen
-    # byobu
     neovim
     neofetch
-    ruby
     cmatrix
-    nettools
-    fnm
     neo-cowsay
     fortune
     lolcat
@@ -141,11 +137,9 @@ in
     entr
     fontconfig
     nerd-font-patcher
-    argparse
     python311Packages.fontforge
     fontforge
     glibcLocales
-    pciutils
     duf
     jq
 
