@@ -9,6 +9,7 @@ DAEMON=true
 OPTIONAL_PACKAGES=0
 DESKTOP_PACKAGES=0
 SERVER_PACKAGES=0
+REINSTALL=0
 
 # Define color codes
 RED="$(tput setaf 1)"
@@ -53,6 +54,9 @@ while [ "$#" -gt 0 ]; do
       ;;
     '--firefox')
       export INCLUDE_FIREFOX=1
+      ;;
+    '--reinstall')
+      export REINSTALL=1
       ;;
     '--help')
       usage
@@ -108,10 +112,12 @@ if command -v home-manager > /dev/null 2>&1; then
   home-manager uninstall
 fi
 '
-\rm -f $HOME/.config/nixpkgs/
-\rm -f $HOME/.nix-profile/
-if command -v nix-collect-garbage > /dev/null 2>&1; then
-  nix-collect-garbage -d
+if $REINSETALL = 1; then
+  \rm -f $HOME/.config/nixpkgs/
+  \rm -f $HOME/.nix-profile/
+  if command -v nix-collect-garbage > /dev/null 2>&1; then
+    nix-collect-garbage -d
+  fi
 fi
 
 echo "${GREEN} *Adding Home Manager Nix channel.* ${RESET}"
