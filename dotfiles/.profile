@@ -30,6 +30,7 @@ fi
 alias gotop="gotop --nvidia"
 
 # tunnels
+alias tunnel-home='ssh -D 34543 -N -f home'
 alias tunnel-empire='ssh -D 34567 -N -f emp-linux'
 alias tunnel-minikube='ssh -D 32123 -N -f minikube'
 
