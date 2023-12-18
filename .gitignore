@@ -8,4 +8,4 @@ flake.local.template.nix
 flake-local/*
 flake.nix
 flake.lock
-dotfiles/.profile
+.profile
