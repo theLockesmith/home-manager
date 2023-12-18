@@ -4,16 +4,10 @@ let
   # Desktop packages
   desktopPackages = with pkgs; [
     keepassxc
-    ffmpeg-full
-    glxinfo
-    pavucontrol
     vscodium
     weechat
     remmina
     spotify
-    flameshot
-    # libGL
-    # plex-media-player
   ];
 
   # Condition for including the desktop packages
@@ -29,8 +23,7 @@ let
 
   # Additional packages
   additionalPackages = with pkgs; [
-    python3
-    python311Packages.virtualenvwrapper
+
   ];
 
   # Environment variable to include extra optional packages
@@ -138,7 +131,6 @@ in
     entr
     fontconfig
     nerd-font-patcher
-    python311Packages.fontforge
     fontforge
     glibcLocales
     duf
