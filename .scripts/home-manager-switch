@@ -101,6 +101,18 @@ else
   echo "${GREEN} *Nix is already installed. Skipping.* ${RESET}"
 fi
 
+# Wipe Home Manager entirely. This may be extreme so I'm giong to add it and leave it as a comment.
+# Uncomment if just removing the two install directories isn't enough on reinstall/updates.
+: '
+if command -v home-manager > /dev/null 2>&1; then
+  home-manager uninstall
+fi
+'
+\rm -f $HOME/.config/nixpkgs/
+\rm -f $HOME/.nix-profile/
+if command -v nix-collect-garbage > /dev/null 2>&1; then
+  nix-collect-garbage -d
+fi
 
 echo "${GREEN} *Adding Home Manager Nix channel.* ${RESET}"
 # Install Home Manager
@@ -119,21 +131,19 @@ if $BACKUP; then
     $( [ -f $HOME/.config/neofetch ] && echo "$HOME/.config/neofetch" ) \
     $( [ -f $HOME/.vimrc ] && echo "$HOME/.vimrc" ) \
     $( [ -f $HOME/.vim ] && echo "$HOME/.vim" ) > /dev/null 2>&1
-
-
-else
-  echo "${GREEN} *Skipping backup of dotfiles. They will be removed instead.* ${RESET}"
-  \rm -rf $HOME/.bashrc > /dev/null 2>&1
-  \rm -rf $HOME/.profile > /dev/null 2>&1
-  \rm -rf $HOME/.scripts > /dev/null 2>&1
-  \rm -rf $HOME/.zshrc > /dev/null 2>&1
-  \rm -rf $HOME/.bash_profile > /dev/null 2>&1
-  \rm -rf $HOME/.config/neofetch > /dev/null 2>&1
-  \rm -rf $HOME/.vimrc > /dev/null 2>&1
-  \rm -rf $HOME/.vim > /dev/null 2>&1
-  \rm -rf $HOME/.zshrc > /dev/null 2>&1
-  \rm -rf $HOME/.scripts > /dev/null 2>&1
 fi
+
+# Delete whatever is left
+\rm -rf $HOME/.bashrc > /dev/null 2>&1
+\rm -rf $HOME/.profile > /dev/null 2>&1
+\rm -rf $HOME/.scripts > /dev/null 2>&1
+\rm -rf $HOME/.zshrc > /dev/null 2>&1
+\rm -rf $HOME/.bash_profile > /dev/null 2>&1
+\rm -rf $HOME/.config/neofetch > /dev/null 2>&1
+\rm -rf $HOME/.vimrc > /dev/null 2>&1
+\rm -rf $HOME/.vim > /dev/null 2>&1
+\rm -rf $HOME/.zshrc > /dev/null 2>&1
+\rm -rf $HOME/.scripts > /dev/null 2>&1
 
 cur_dir=$(pwd)
 cd $HOME/.config/home-manager
