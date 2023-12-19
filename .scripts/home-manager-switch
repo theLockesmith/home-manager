@@ -69,7 +69,7 @@ while [ "$#" -gt 0 ]; do
   shift
 done
 
-if $DESKTOP_PACKAGES = 1 && $SERVER_PACKAGES = 1; then
+if $DESKTOP_PACKAGES && $SERVER_PACKAGES; then
   echo "${RED} *Options --desktop and --server cannot be used together. Please select one or the other.* ${RESET}"
   exit 1
 fi
@@ -112,7 +112,7 @@ if command -v home-manager > /dev/null 2>&1; then
   home-manager uninstall
 fi
 '
-if $REINSETALL = 1; then
+if $REINSETALL; then
   \rm -f $HOME/.config/nixpkgs/
   \rm -f $HOME/.nix-profile/
   if command -v nix-collect-garbage > /dev/null 2>&1; then
