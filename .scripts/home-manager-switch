@@ -89,7 +89,7 @@ mkdir -p $HOME/.local/share/fonts/ > /dev/null 2>&1
 
 if ! command -v nix > /dev/null 2>&1; then
   echo "${GREEN} *Nix not detected. Installing now.* ${RESET}"
-  \rm -rf /etc/bash.bashrc.backup-before-nix
+  sudo \rm -rf /etc/bash.bashrc.backup-before-nix
   # Install Nix if not already installed
   if $DAEMON; then
     echo "${GREEN} *Starting Nix system-level install.* ${RESET}"
