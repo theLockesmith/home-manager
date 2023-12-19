@@ -133,6 +133,9 @@ if [[ $EUID != 0 ]]; then
       source $HOME/.local/bin/virtualenvwrapper.sh
     fi
   fi
+  if [[ -f "/usr/share/virtualenvwrapper/virtualenvwrapper.sh" ]]; then
+    source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+  fi
 fi
 
 ################
