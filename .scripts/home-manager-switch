@@ -62,7 +62,7 @@ while [ "$#" -gt 0 ]; do
       usage
       ;;
     *)
-      echo "$ *{RED}Unknown option: $1${RESET}* " >&2
+      echo "*${RED}Unknown option: $1${RESET}* " >&2
       usage
       ;;
   esac
