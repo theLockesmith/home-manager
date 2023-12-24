@@ -189,12 +189,6 @@ in
     nix-direnv.enable = true;
   };
 
-  services.gpg-agent = {
-    enable = false;
-    defaultCacheTtl = 1800;
-    enableSshSupport = true;
-  };
-
   # Optional import for Firefox
   imports = lib.optional includeFirefox firefoxConfigPath;
 
