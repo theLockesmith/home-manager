@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# This script will restart systemd-networkd and then release and renew
+# the DHCP lease for each bond interface.
+
+# Requires sudo privileges
+
+# Restart systemd-networkd
+echo "Restarting systemd-networkd..."
+sudo systemctl restart systemd-networkd
+
+# Wait a bit to ensure systemd-networkd is fully restarted
+sleep 5
+
+# Get all bond interfaces
+bonds=$(ls /sys/class/net | grep '^bond')
+
+# Release and renew DHCP lease for each bond interface
+for bond in $bonds; do
+    echo "Processing $bond interface..."
+    sudo dhclient -r $bond
+    sudo dhclient $bond
+done
+
+echo "Completed processing bond interfaces."

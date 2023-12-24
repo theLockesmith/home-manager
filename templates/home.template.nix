@@ -33,6 +33,10 @@ let
   firefoxConfigPath = ./programs/firefox;
   includeFirefox = builtins.getEnv "INCLUDE_FIREFOX" == "1";
 
+  # Exodus wallet
+  exodusPkg = with pkgs; [exodus];
+  includeExodus = builtins.getEnv "INCLUDE_EXODUS" == "1";
+
 in
 {
   nix = {
@@ -138,7 +142,8 @@ in
 
   ] ++ lib.optionals includeDesktopPackages desktopPackages
     ++ lib.optionals includeServerPackages serverPackages
-    ++ lib.optionals includeAdditionalPackages additionalPackages;
+    ++ lib.optionals includeAdditionalPackages additionalPackages
+    ++ lib.optionals includeExodus exodusPkg;
     # For individual optional packages, just use `++ pkgname` as shown below
     # ++ optionalPackage1
 

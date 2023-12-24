@@ -515,7 +515,7 @@ alias randosay='cowsay-rando'
 
 ## Editors ##
 alias vi='$HOME/.scripts/vi'
-#alias sudo='sudo '
+alias code='codium '
 
 ## Navigation ##
 alias ..='cd ..'

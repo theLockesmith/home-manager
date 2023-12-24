@@ -11,6 +11,10 @@ DESKTOP_PACKAGES=0
 SERVER_PACKAGES=0
 REINSTALL=0
 
+# Optional packages
+INCLUDE_FIREFOX=0
+INCLUDE_EXODUS=0
+
 # Define color codes
 RED="$(tput setaf 1)"
 GREEN="$(tput setaf 2)"
@@ -54,6 +58,9 @@ while [ "$#" -gt 0 ]; do
       ;;
     '--firefox')
       export INCLUDE_FIREFOX=1
+      ;;
+    '--exodus')
+      export INCLUDE_EXODUS=1
       ;;
     '--reinstall')
       export REINSTALL=1
