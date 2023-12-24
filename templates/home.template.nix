@@ -189,6 +189,33 @@ in
     nix-direnv.enable = true;
   };
 
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+
+    extraConfig = ''
+      " Set the filetype plugin on
+      filetype plugin on
+
+      " Enable syntax highlighting
+      syntax on
+
+      " Set tabs to have 4 spaces
+      set tabstop=4
+      set shiftwidth=4
+      set expandtab
+
+      " Set the clipboard to use the system clipboard
+      set clipboard+=unnamedplus
+    '';
+
+    plugins = with pkgs.vimPlugins; [
+      vim-airline
+      nerdtree
+    ]
+  }
+
   # Optional import for Firefox
   imports = lib.optional includeFirefox firefoxConfigPath;
 
