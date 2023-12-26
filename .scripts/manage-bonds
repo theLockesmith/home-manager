@@ -17,9 +17,14 @@ bonds=$(ls /sys/class/net | grep '^bond')
 
 # Release and renew DHCP lease for each bond interface
 for bond in $bonds; do
-    echo "Processing $bond interface..."
-    sudo dhclient -r $bond
-    sudo dhclient $bond
+    if "$bond" != "bonding_masters"; then
+        echo "Processing $bond interface..."
+        sudo dhclient -r $bond
+        sudo dhclient $bond
+    fi
 done
+
+sleep 5
+sudo systemctl restart systemd-networkd
 
 echo "Completed processing bond interfaces."
