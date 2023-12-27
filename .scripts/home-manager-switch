@@ -120,7 +120,7 @@ if command -v home-manager > /dev/null 2>&1; then
   home-manager uninstall
 fi
 '
-if test "$REINSETALL" = 1 ; then
+if test "$REINSTALL" = 1 ; then
   \rm -f $HOME/.config/nixpkgs/
   \rm -f $HOME/.nix-profile/
   if command -v nix-collect-garbage > /dev/null 2>&1; then
