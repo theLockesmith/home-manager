@@ -231,12 +231,12 @@ if test -z "$NAME"  || test -z "$EMAIL"; then
   echo "${GREEN} *You can leave these blank if you'd like.* ${RESET}"
 
   if test -z "$NAME"; then
-    echo -n "Enter your name:${NEWLINE}"
+    echo -n "Enter your name:$NEWLINE"
     read NAME
   fi
 
   if test -z "$EMAIL"; then
-    echo -n "Enter your email:${NEWLINE}"
+    echo -n "Enter your email:$NEWLINE"
     read EMAIL
   fi
 fi
