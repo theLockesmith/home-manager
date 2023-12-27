@@ -126,6 +126,8 @@ fi
 if test "$REINSTALL" = 1 ; then
   \rm -f $HOME/.config/nixpkgs/
   \rm -f $HOME/.nix-profile/
+  \rm -f /home/forgemaster/.local/state/nix/profiles/home-manager*
+  \rm -f /home/forgemaster/.local/state/home-manager/gcroots/current-home
   if command -v nix-collect-garbage > /dev/null 2>&1; then
     nix-collect-garbage -d
   fi
