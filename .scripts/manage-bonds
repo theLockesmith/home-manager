@@ -24,7 +24,4 @@ for bond in $bonds; do
     fi
 done
 
-sleep 5
-sudo systemctl restart systemd-networkd
-
 echo "Completed processing bond interfaces."

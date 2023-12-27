@@ -260,10 +260,10 @@ fi
 
 # Build your home
 
-if [ $SYSTEM = "desktop" ]; then
+if [ "$SYSTEM" = "desktop" ]; then
   echo "${GREEN} *Building home for desktop.* ${RESET}"
   home-manager switch -b backup --impure
-elif [ $SYSTEM = "server" ]; then
+elif [ "$SYSTEM" = "server" ]; then
   echo "${GREEN} *Building home for server.* ${RESET}"
   home-manager switch -b backup --impure
 else
