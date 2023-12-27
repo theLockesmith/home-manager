@@ -125,7 +125,7 @@ in
     gtop
     tmux
     screen
-    neovim
+    #neovim
     neofetch
     cmatrix
     neo-cowsay
