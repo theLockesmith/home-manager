@@ -172,6 +172,7 @@ if [ ! -d "$HOME/.config/home-manager/.git" ]; then
   git remote add origin $REPO
   git fetch --all
   git checkout main
+  git pull origin main
   git pull origin main --recurse-submodules
   git submodule update --init --recursive
 else
@@ -198,6 +199,7 @@ else
       case "$response" in
         [Yy])
           echo "${GREEN} *Updating local repository.* ${RESET}"
+          git pull origin main
           git pull origin main --recurse-submodules
           break
           ;;
