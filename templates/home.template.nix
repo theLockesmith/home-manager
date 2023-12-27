@@ -214,7 +214,7 @@ in
       vim-airline
       nerdtree
     ]
-  }
+  };
 
   # Optional import for Firefox
   imports = lib.optional includeFirefox firefoxConfigPath;
