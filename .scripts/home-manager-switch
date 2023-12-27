@@ -99,6 +99,7 @@ if ! command -v nix > /dev/null 2>&1; then
   sudo \rm -rf /etc/bash.bashrc.backup-before-nix
   sudo \rm -rf /etc/bashrc.backup-before-nix
   sudo \rm -rf /etc/profile.d/nix.sh.backup-before-nix
+  sudo \rm -rf /etc/zshrc.backup-before-nix
   # Install Nix if not already installed
   if $DAEMON; then
     echo "${GREEN} *Starting Nix system-level install.* ${RESET}"
