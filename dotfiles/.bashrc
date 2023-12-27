@@ -484,7 +484,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo -e terminal || e
 alias fsearch='flatpak search'
 alias fuckingown='sudo chown -Rh $USER:$USER /home/$USER'
 alias pup='pip3 list --outdated --format=freeze | grep -v "^\-e" | cut -d = -f 1  | xargs -n1 pip3 install -U'
-alias speedtest='speedtest-cli'
 alias neo='clear && resh'
 alias wine='wine 2>~/.wine.error.log'
 alias tclock='tty-clock -s -c -t -n -C 5'
