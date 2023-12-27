@@ -213,7 +213,7 @@ in
     plugins = with pkgs.vimPlugins; [
       vim-airline
       nerdtree
-    ]
+    ];
   };
 
   # Optional import for Firefox
