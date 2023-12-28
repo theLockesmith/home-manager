@@ -85,7 +85,8 @@ in
     #   org.gradle.daemon.idletimeout=3600000
     # '';
 
-    ".vimrc".source = ./dotfiles/.vimrc;
+    #".vimrc".source = ./dotfiles/.vimrc;
+    ".config/nvim".source = ./dotfiles/kickstart.nvim;
     ".extrabashrc".source = ./dotfiles/.bashrc;
     ".localprofile" = {
       text = builtins.readFile (if builtins.pathExists ./dotfiles/.profile then ./dotfiles/.profile else ./dotfiles/blankfile);
@@ -177,6 +178,7 @@ in
     aliases = {
       st = "status";
     };
+    extraConfig.submodule.recurse = true;
   };
 
   programs.git.lfs = {
@@ -194,26 +196,29 @@ in
     viAlias = true;
     vimAlias = true;
 
-    extraConfig = ''
-      " Set the filetype plugin on
-      filetype plugin on
-
-      " Enable syntax highlighting
-      syntax on
-
-      " Set tabs to have 4 spaces
-      set tabstop=4
-      set shiftwidth=4
-      set expandtab
-
-      " Set the clipboard to use the system clipboard
-      set clipboard+=unnamedplus
-    '';
-
-    plugins = with pkgs.vimPlugins; [
-      vim-airline
-      nerdtree
-    ];
+    #extraConfig = ''
+    #  " Set the filetype plugin on
+    #  filetype plugin on
+    #
+    #  " Enable syntax highlighting
+    #  syntax on
+    #
+    #  " Set tabs to have 4 spaces
+    #  set tabstop=4
+    #  set shiftwidth=4
+    #  set expandtab
+    #
+    #  " Set the clipboard to use the system clipboard
+    #  set clipboard+=unnamedplus
+    #'';
+    #
+    #plugins = with pkgs.vimPlugins; [
+    #  vim-airline
+    #  nerdtree
+    #  diffview
+    #  neogit
+    #  telescope
+    #];
   };
 
   # Optional import for Firefox
