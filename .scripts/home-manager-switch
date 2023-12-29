@@ -178,8 +178,10 @@ if [ ! -d "$HOME/.config/home-manager/.git" ]; then
   git fetch --all
   git checkout main
   git pull origin main
+  git submodule sync
+  git submodule init
   git pull origin main --recurse-submodules
-  git submodule update --init --recursive
+  git submodule update --remote --init --recursive
 else
   # Specify the local and remote branches
   cd $HOME/.config/home-manager
@@ -205,7 +207,10 @@ else
         [Yy])
           echo "${GREEN} *Updating local repository.* ${RESET}"
           git pull origin main
+          git submodule sync
+          git submodule init
           git pull origin main --recurse-submodules
+          git submodule update --remote --init --recursive
           break
           ;;
         [Nn])
