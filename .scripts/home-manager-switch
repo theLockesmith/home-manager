@@ -205,7 +205,7 @@ else
     echo "${GREEN} *Local branch is up-to-date. Skipping.* ${RESET}"
   elif [ "$local_commit" = "$(git merge-base "$local_branch" "$remote_branch")" ]; then
       while true; do
-      if "$YES" = 0; then
+      if test "$YES" = 0; then
         read -p "${YELLOW} *Local branch is behind the remote. Would you like to update?* ${RESET} (y/n): " response
       else
         response="y"
