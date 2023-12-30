@@ -553,10 +553,10 @@ alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
 ## become root ##
-alias root='sudo -i'
+alias root='\sudo -i'
 
 ## Preserve env when sudo ##
-alias sudo='sudo -E'
+alias sudo='\sudo -E'
 
 ## reboot / halt / poweroff ##
 alias reboot='sudo /sbin/reboot'
