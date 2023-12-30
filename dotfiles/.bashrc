@@ -555,6 +555,9 @@ alias chgrp='chgrp --preserve-root'
 ## become root ##
 alias root='sudo -i'
 
+## Preserve env when sudo ##
+alias sudo='sudo -E'
+
 ## reboot / halt / poweroff ##
 alias reboot='sudo /sbin/reboot'
 alias poweroff='sudo /sbin/poweroff'
