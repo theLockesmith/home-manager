@@ -115,7 +115,7 @@ if ! command -v nix > /dev/null 2>&1; then
   sleep 2
 
   echo "${GREEN} *Sourcing nix.sh.* ${RESET}"
-  . /etc/profile.d/nix.sh
+  source /etc/profile.d/nix.sh
 else
   echo "${GREEN} *Nix is already installed. Skipping.* ${RESET}"
 fi
@@ -307,6 +307,6 @@ fi
 cd $cur_dir
 
 # You're done! Start a new shell session for changes to take effect!
-. /etc/profile.d/nix.sh  > /dev/null 2>&1
-. $HOME/.bashrc > /dev/null 2>&1
+source /etc/profile.d/nix.sh  > /dev/null 2>&1
+source $HOME/.bashrc > /dev/null 2>&1
 echo "${GREEN} *Installation Complete! You free to use your new shell, however a new session, or preferably a reboot, is recommended.* ${RESET}"
