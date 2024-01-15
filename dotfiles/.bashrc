@@ -136,6 +136,9 @@ if [[ $EUID != 0 ]]; then
   if [[ -f "/usr/share/virtualenvwrapper/virtualenvwrapper.sh" ]]; then
     source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
   fi
+  if [[ -f "/usr/bin/virtualenvwrapper.sh" ]]; then
+    source /usr/bin/virtualenvwrapper.sh
+  fi
 fi
 
 ################
