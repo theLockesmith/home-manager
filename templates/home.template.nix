@@ -159,7 +159,7 @@ in
   #  /etc/profiles/per-user/user/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "neovim";
+    EDITOR = "nvim";
   };
 
   # Allow Home Manager to manage bash
