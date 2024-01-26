@@ -2,7 +2,7 @@
 
 # Set default system as server as it will cause less problems if the assumption is incorrect.
 SYSTEM="server"
-BACKUP=true
+BACKUP=false
 DAEMON_FLAG=false
 NO_DAEMON_FLAG=false
 DAEMON=true
@@ -29,7 +29,7 @@ $0
 --server        Run the installer for a server environment
 --daemon        Passes --daemon to NixOS installer (default)
 --no-daemon     Passes --no-daemon to NixOS installer
---no-backup     Installer backs up dotfiles in your home directory by default. Use this flag to disable backups of dotfiles. *It is not advised to use 
+--backup        Installer backs up dotfiles in your home directory by default. Use this flag to disable backups of dotfiles. *It is not advised to use 
 --firefox       Installs Firefox. This is currently not done by default because of missing PWA support in nix package.
 ${RESET}" >&2
   exit 1
@@ -54,8 +54,8 @@ while [ "$#" -gt 0 ]; do
       NO_DAEMON_FLAG=true
       DAEMON=false
       ;;
-    '--no-backup')
-      BACKUP=false
+    '--backup')
+      BACKUP=true
       ;;
     '--yes')
       YES=1

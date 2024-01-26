@@ -3,11 +3,11 @@
 let
   # Desktop packages
   desktopPackages = with pkgs; [
-    keepassxc
-    vscodium
-    weechat
-    remmina
-    spotify
+    #keepassxc
+    #vscodium
+    #weechat
+    #remmina
+    #spotify
   ];
 
   # Condition for including the desktop packages
@@ -168,6 +168,13 @@ in
     bashrcExtra = ''
       . ~/.extrabashrc
     '';
+  };
+
+  programs.btop = {
+    enable = true;
+    settings = {
+      color_theme = "adapta";
+    };
   };
 
   programs.git = {

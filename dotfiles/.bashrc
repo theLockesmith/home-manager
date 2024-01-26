@@ -501,7 +501,6 @@ alias l='ls'
 alias la='ls -A'
 alias ll='ls -lA'
 alias mkdir='mkdir -p'
-#alias mount='mount |column -t'
 alias now='date +"%T"'
 alias nowdate='date +"%d-%m-%Y"'
 alias pa='ps aux | grep'
@@ -514,6 +513,9 @@ alias jwatch='journalctl -f --output cat -u'
 alias switch='nix-collect-garbage; home-manager switch; tmux kill-server; exec bash -l'
 alias cowsay-rando='$HOME/.scripts/cowsay-rando'
 alias randosay='cowsay-rando'
+
+## Remote weechat ##
+alias weechat='ssh -t docker docker attach weechat'
 
 ## Editors ##
 alias vi='$HOME/.scripts/vi'
